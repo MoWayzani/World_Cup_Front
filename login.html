@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Form</title>
+    <link rel="stylesheet" href="signup.css" />
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+   <form class="signupForm" id="loginForm"> <!-- Added ID here -->
+    <p class="title">Login </p>
+    <p class="message">Signup now and get full access to our app. </p>
+
+    <label for="username">
+        <input required placeholder="" type="text" class="input" id="username">
+        <span>Username</span>
+    </label>
+          
+    <label for="password">
+        <input required placeholder="" type="password" class="input" id="password">
+        <span>Password</span>
+    </label>
+
+    <button type="submit" class="submit">Submit</button>
+    <p class="signin">Don't have an account? <a href="signup.html">Sign up</a> </p>
+</form>
+          
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script>
+    document.getElementById('loginForm').onsubmit = function(event) {
+        event.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        fetch('http://192.168.0.106:8000/api/login/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username: username, password: password })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.token) {
+                sessionStorage.setItem('authToken', data.token);
+                sessionStorage.setItem('isStaff', data.is_staff);
+                const redirectPage = data.is_staff ? 'admin.html' : 'dashboard.html';
+                window.location.href = redirectPage; // Redirect based on user role
+            } else {
+                alert('Login failed: ' + data.detail);
+            }
+        })
+        .catch(error => alert('Error logging in: ' + error));
+    };
+</script>
+</body>
+</html>

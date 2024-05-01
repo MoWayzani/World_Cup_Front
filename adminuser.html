@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Users</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="adminuser.css" />
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Manage Users</h1>
+        <button onclick="window.location.href='admin.html'" class="btn btn-primary mb-3">Back to Admin Dashboard</button>
+        <div class="user-table" id="usersList">Loading users...</div>
+    </div>
+
+   
+    <script>
+    window.onload = function() {
+        const authToken = sessionStorage.getItem('authToken');
+        const isStaff = sessionStorage.getItem('isStaff') === 'true';
+    
+        if (!authToken || !isStaff) {
+            window.location.href = 'login.html'; // Redirect if not authenticated or not staff
+        } else {
+            fetch('http://192.168.0.106:8000/api/non-staff-users/', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Token ' + authToken,
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+    const usersContainer = document.getElementById('usersList');
+    // Adding a header row
+    let headerHTML = `
+        <div class="user-row header-row">
+            <div class="user-detail"><strong>Username</strong></div>
+            <div class="user-detail"><strong>Email</strong></div>
+            <div class="user-detail"><strong>First Name</strong></div>
+            <div class="user-detail"><strong>Last Name</strong></div>
+        </div>
+    `;
+    // Generating HTML for user data
+    let userRowsHTML = data.results.map(user => `
+        <div class="user-row">
+            <div class="user-detail">${user.username}</div>
+            <div class="user-detail">${user.email}</div>
+            <div class="user-detail">${user.first_name}</div>
+            <div class="user-detail">${user.last_name}</div>
+        </div>
+    `).join('');
+
+    usersContainer.innerHTML = headerHTML + userRowsHTML; // Combining headers with user rows
+})
+
+        }
+    };
+</script>
+</body>
+</html>
