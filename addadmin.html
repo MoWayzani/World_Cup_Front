@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Admin</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="addadmin.css">
+</head>
+<body>
+    
+    
+    <form id="addAdminForm" class="form">
+        <p class="title">Add Admin </p>
+        <p class="message">Signup now and get full access to our app. </p>
+            <div class="flex">
+            <label>
+                <input type="text" class="input" id="firstName">
+                <span>Firstname</span>
+            </label>
+    
+            <label>
+                <input class="input" type="text" id="lastName">
+                <span>Lastname</span>
+            </label>
+        </div> 
+
+        <label>
+            <input class="input" type="text" id="username">
+            <span>Username</span>
+        </label> 
+
+        <label>
+            <input class="input" type="email" id="email">
+            <span>Email</span>
+        </label> 
+            
+        <label>
+            <input class="input" type="password" id="password">
+            <span>Password</span>
+        </label>
+        <label>
+            <input class="input" type="password" id="passwordConfirmation">
+            <span>Confirm password</span>
+        </label>
+        <button class="submit">Submit</button>
+       
+    </form>
+
+    
+    <script>
+        document.getElementById('addAdminForm').onsubmit = function(event) {
+        event.preventDefault();
+        const data = {
+            username: document.getElementById('username').value,
+            first_name: document.getElementById('firstName').value,
+            last_name: document.getElementById('lastName').value,
+            email: document.getElementById('email').value,
+            password: document.getElementById('password').value,
+            password_confirmation: document.getElementById('passwordConfirmation').value,
+            is_staff: true  // Always true for adding admins
+        };
+
+        fetch('http://192.168.0.106:8000/api/signup/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw response;  // This will skip the next then() and go to catch block directly.
+            }
+            return response.json();  // Parse JSON data from the response
+        })
+        .then(data => {
+            if (data.message === "User created successfully.") {
+                alert('Admin created successfully.');
+                window.location.href = 'admin.html';  // Redirect back to the admin dashboard
+            } else {
+                alert('Failed to create admin: ' + (data.detail || 'Unknown error'));
+            }
+        })
+        .catch(errorResponse => {
+            // Handle JSON response
+            errorResponse.json().then(errorData => {
+                console.log("Error: ", errorData);
+                alert('Error creating admin: ' + (errorData.detail || 'Unknown error'));
+            }).catch(error => {
+                // Non-JSON response or some other error
+                console.log("Non-JSON error: ", error);
+                alert('Critical error creating admin: ' + error);
+            });
+        });
+    };
+
+    </script>
+</body>
+</html>
