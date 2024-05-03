@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post News</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Post News</h1>
+        <form id="newsForm" class="mt-4">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" id="title" required>
+            </div>
+            <div class="form-group">
+                <label for="content">Content</label>
+                <textarea class="form-control" id="content" rows="5" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="image_file">Image File</label>
+                <input type="file" class="form-control" id="image_file" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('newsForm').onsubmit = function(event) {
+    event.preventDefault();
+    var formData = new FormData();
+    formData.append('title', document.getElementById('title').value);
+    formData.append('content', document.getElementById('content').value);
+    formData.append('image', document.getElementById('image_file').files[0]);
+
+    fetch('http://192.168.0.106:8000/api/news/create/', {
+        method: 'POST',
+        body: formData  // FormData will set the Content-Type to 'multipart/form-data'
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        alert('News posted successfully!');
+        document.getElementById('newsForm').reset();
+    })
+    .catch(error => {
+        alert('Error posting news: ' + error.message);
+    });
+};
+
+    </script>
+</body>
+</html>
