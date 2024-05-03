@@ -85,14 +85,21 @@
             <!--sidebar end-->
             <!--main container start-->
             <div class="main-container">
-                <h1 class="mt-5">Admin Dashboard</h1>
-                <p>Welcome! Here you can manage users, settings, and more.</p>
+               
+                
+                <h1>Admin Users</h1>
+                <div id="adminList" class="user-table">Loading admin users...</div>
+                
+                <button onclick="window.location.href='addadmin.html'" class="btn btn-primary mt-3">Add Admin</button>
                
             </div>
             <!--main container end-->
         </div>
         <!--wrapper end-->
         <script>
+           // Import and configure dotenv
+
+
             window.onload = function() {
                 const authToken = sessionStorage.getItem('authToken');
                 const isStaff = sessionStorage.getItem('isStaff') === 'true';
@@ -100,6 +107,7 @@
                 if (!authToken || !isStaff) {
                     window.location.href = 'login.html'; // Ensure only admins can access the admin dashboard
                 } else {
+                    require('dotenv').config(); 
                     fetch('http://192.168.0.106:8000/api/user-details/', {
                         method: 'GET',
                         headers: {
@@ -118,12 +126,93 @@
                     });
                 }
             };
-    
+            window.onload = function() {
+            authToken = sessionStorage.getItem('authToken');
+            isStaff = sessionStorage.getItem('isStaff') === 'true';
+
+            if (!authToken || !isStaff) {
+                window.location.href = 'login.html'; // Ensure only admins can access the admin dashboard
+            } else {
+                fetchAdminUsers();
+                fetchUserDetails();
+            }
+        };
             function logout() {
                 sessionStorage.removeItem('authToken');
                 sessionStorage.removeItem('isStaff');
                 window.location.href = 'login.html'; // Redirect to login on logout
             }
+            function fetchAdminUsers() {
+            fetch('http://192.168.0.106:8000/api/staff-users/', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Token ' + authToken,
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (!data || !data.results || !Array.isArray(data.results)) {
+                    console.error('Expected an array in the results but got:', data);
+                    document.getElementById('adminList').textContent = 'Data format error, please check the console for details.';
+                    return;
+                }
+                
+                const adminListContainer = document.getElementById('adminList');
+                adminListContainer.innerHTML = data.results.map(admin => `<div>${admin.username} - ${admin.email} - ${admin.first_name} ${admin.last_name} <button onclick="confirmDelete(${admin.id})">Delete</button></div>`).join('');
+            })
+            .catch(error => {
+                console.error('Error fetching admin users:', error);
+                document.getElementById('adminList').textContent = 'Failed to load admin users.';
+            });
+        }
+
+        function fetchUserDetails() {
+            fetch('http://192.168.0.106:8000/api/user-details/', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Token ' + authToken,
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('userName').textContent = data.first_name + ' ' + data.last_name;
+            })
+            .catch(error => {
+                console.error('Error fetching user details:', error);
+                alert('Error fetching user details. Please log in again.');
+                logout();
+            });
+        }
+
+        function confirmDelete(userId) {
+            if (confirm("Are you sure you want to delete this user?")) {
+                fetch(`http://192.168.0.106:8000/api/delete-user/${userId}/`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': 'Token ' + authToken
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert('User deleted successfully.');
+                        fetchAdminUsers();  // Re-fetch the list to update the display
+                    } else {
+                        alert('Failed to delete user.');
+                    }
+                })
+                .catch(error => {
+                    alert('Error deleting user: ' + error);
+                });
+            }
+        }
+
+        function logout() {
+            sessionStorage.removeItem('authToken');
+            sessionStorage.removeItem('isStaff');
+            window.location.href = 'login.html'; // Redirect to login on logout
+        }
         </script>
 
         <script type="text/javascript">

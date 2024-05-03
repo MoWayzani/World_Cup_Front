@@ -10,7 +10,14 @@
   body{
     background: #fff;
   }
-  
+  .user-table {
+    width: 100%;
+    margin-top: 20px;
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
   .wrapper .header{
     z-index: 1;
     background: #22242A;
@@ -36,7 +43,15 @@
     text-transform: uppercase;
     font-weight: 900;
   }
-  
+  .user-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Create four columns of equal width */
+    align-items: center;
+    padding: 10px 20px;
+    border-bottom: 1px solid #eee; /* Line to separate users */
+    background-color: #f9f9f9;
+}
+
   .wrapper .header .header-menu .title span{
     color: #4CCEE8;
   }
