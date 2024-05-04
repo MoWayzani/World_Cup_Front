@@ -89,7 +89,7 @@
                 
                 <h1>Admin Users</h1>
                 <div id="adminList" class="user-table">Loading admin users...</div>
-                
+                <br>
                 <button onclick="window.location.href='addadmin.html'" class="btn btn-primary mt-3">Add Admin</button>
                
             </div>
@@ -108,7 +108,7 @@
                     window.location.href = 'login.html'; // Ensure only admins can access the admin dashboard
                 } else {
                     require('dotenv').config(); 
-                    fetch('http://192.168.0.106:8000/api/user-details/', {
+                    fetch('http://192.168.1.6:8000/api/user-details/', {
                         method: 'GET',
                         headers: {
                             'Authorization': 'Token ' + authToken,
@@ -143,7 +143,7 @@
                 window.location.href = 'login.html'; // Redirect to login on logout
             }
             function fetchAdminUsers() {
-            fetch('http://192.168.0.106:8000/api/staff-users/', {
+            fetch('http://192.168.1.6:8000/api/staff-users/', {
                 method: 'GET',
                 headers: {
                     'Authorization': 'Token ' + authToken,
@@ -168,7 +168,7 @@
         }
 
         function fetchUserDetails() {
-            fetch('http://192.168.0.106:8000/api/user-details/', {
+            fetch('http://192.168.1.6:8000/api/user-details/', {
                 method: 'GET',
                 headers: {
                     'Authorization': 'Token ' + authToken,
@@ -188,7 +188,7 @@
 
         function confirmDelete(userId) {
             if (confirm("Are you sure you want to delete this user?")) {
-                fetch(`http://192.168.0.106:8000/api/delete-user/${userId}/`, {
+                fetch(`http://192.168.1.6:8000/api/delete-user/${userId}/`, {
                     method: 'DELETE',
                     headers: {
                         'Authorization': 'Token ' + authToken

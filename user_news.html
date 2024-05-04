@@ -46,7 +46,7 @@
 
     <script>
         window.onload = function() {
-            fetch('http://192.168.0.106:8000/api/news/')
+            fetch('http://192.168.1.6:8000/api/news/')
             .then(response => response.json())
             .then(data => {
                 const newsContainer = document.getElementById('newsList');
@@ -55,7 +55,7 @@
                         <div class="card mb-3">
                             <div class="card-body">
                                 <h5 class="card-title">${news.title}</h5>
-                                <img src="${news.image}" alt="News Image" style="width:500px; height:auto;">
+                                <img src="${news.image}" alt="News Image" style="width:900px; height:400px;">
                                 <p class="card-text">${news.content}</p>
                                 <p class="card-text"><small class="text-muted">Posted on ${new Date(news.date).toLocaleDateString()}</small></p>
                                 

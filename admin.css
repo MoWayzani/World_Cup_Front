@@ -27,6 +27,45 @@
     display: flex;
     top: 0;
   }
+  h1 {
+    text-align: center;
+    font-size: 24px;
+    color: #333; /* or any color you prefer */
+    margin-bottom: 20px; /* adjust as needed */
+  }
+  
+  .user-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid #ccc;
+    padding: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  .btn {
+    display: inline-block;
+    background-color: #007bff; /* Blue color, you can change it */
+    color: #fff;
+    text-align: center;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+  }
+  
+  .btn:hover {
+    background-color: #0056b3; /* Darker blue color on hover */
+  }
+  
+  #adminList {
+    text-align: center;
+    font-size: 16px;
+    color: #666; /* or any color you prefer */
+    padding: 20px;
+  }
   
   .wrapper .header .header-menu{
     width: calc(100% - 0%);

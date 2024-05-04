@@ -23,7 +23,7 @@
         if (!authToken || !isStaff) {
             window.location.href = 'login.html'; // Redirect if not authenticated or not staff
         } else {
-            fetch('http://192.168.0.106:8000/api/non-staff-users/', {
+            fetch('http://192.168.1.6:8000/api/non-staff-users/', {
                 method: 'GET',
                 headers: {
                     'Authorization': 'Token ' + authToken,
