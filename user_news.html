@@ -5,6 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin News Page</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .card {
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card-title {
+            font-weight: bold;
+            font-size: 24px;
+        }
+        .card-img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px 5px 0 0;
+        }
+        .card-body {
+            padding: 20px;
+        }
+        .card-text {
+            font-size: 18px;
+        }
+        .card-date {
+            font-size: 14px;
+            color: #6c757d;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -13,14 +45,7 @@
     </div>
 
     <script>
-       
-       window.onload = function() {
-                const authToken = sessionStorage.getItem('authToken');
-                const isStaff = sessionStorage.getItem('isStaff') === 'true';
-    
-                if (!authToken || !isStaff) {
-                    window.location.href = 'login.html'; // Ensure only admins can access the admin dashboard
-                } else {
+        window.onload = function() {
             fetch('http://192.168.0.106:8000/api/news/')
             .then(response => response.json())
             .then(data => {
@@ -30,10 +55,10 @@
                         <div class="card mb-3">
                             <div class="card-body">
                                 <h5 class="card-title">${news.title}</h5>
-                                <img src="${news.image}" alt="News Image" style="width:300px; height:auto;">
+                                <img src="${news.image}" alt="News Image" style="width:500px; height:auto;">
                                 <p class="card-text">${news.content}</p>
                                 <p class="card-text"><small class="text-muted">Posted on ${new Date(news.date).toLocaleDateString()}</small></p>
-                                <button onclick="deleteNews(${news.id})" class="btn btn-danger">Delete</button>
+                                
                             </div>
                         </div>
                     `).join('');
@@ -48,26 +73,7 @@
             });
         };
 
-        function deleteNews(id) {
-            if (confirm("Are you sure you want to delete this news item?")) {
-                fetch(`http://192.168.0.106:8000/api/news/${id}/`, {
-                    method: 'DELETE'
-                })
-                .then(response => {
-                    if (response.ok) {
-                        alert("News deleted successfully.");
-                        window.location.reload(); // Reload the page to update the list
-                    } else {
-                        alert("Failed to delete news.");
-                    }
-                })
-                .catch(error => {
-                    alert("Error deleting news: " + error.message);
-                });
-            }
-        }
-    }
-
+       
     </script>
 </body>
 </html>

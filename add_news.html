@@ -5,6 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Post News</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+       body {
+            background-image: url('assets/addadminjpg.jpg'); /* Replace 'background_image.jpg' with your actual image path */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            padding: 0;
+            margin: 0;
+        }
+        .container {
+          background-color: rgba(255, 255, 255, 0.7); /* Lighter background color with transparency */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-top: 50px;
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -23,10 +52,19 @@
                 <input type="file" class="form-control" id="image_file" required>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="admin.html" class="btn btn-primary ml-2">Back</a>
         </form>
     </div>
 
     <script>
+        
+        window.onload = function() {
+                const authToken = sessionStorage.getItem('authToken');
+                const isStaff = sessionStorage.getItem('isStaff') === 'true';
+    
+                if (!authToken || !isStaff) {
+                    window.location.href = 'login.html'; // Ensure only admins can access the admin dashboard
+                } else {
         document.getElementById('newsForm').onsubmit = function(event) {
     event.preventDefault();
     var formData = new FormData();
@@ -52,6 +90,8 @@
         alert('Error posting news: ' + error.message);
     });
 };
+                }
+            }
 
     </script>
 </body>
