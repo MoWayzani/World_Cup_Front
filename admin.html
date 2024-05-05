@@ -57,12 +57,12 @@
                     </li>
                     <li class="item" id="messages">
                         <a href="#messages" class="menu-btn">
-                            <i class="fas fa-envelope"></i><span>Messages <i class="fas fa-chevron-down drop-down"></i></span>
+                            <i class="fas fa-envelope"></i><span>Teams <i class="fas fa-chevron-down drop-down"></i></span>
                         </a>
                         <div class="sub-menu">
-                            <a href="#"><i class="fas fa-envelope"></i><span>New</span></a>
-                            <a href="#"><i class="fas fa-envelope-square"></i><span>Sent</span></a>
-                            <a href="#"><i class="fas fa-exclamation-circle"></i><span>Spam</span></a>
+                            <a href="add_team.html"><i class="fas fa-envelope"></i><span>Add Teams</span></a>
+                            <a href="display_teams.html"><i class="fas fa-envelope-square"></i><span>Display Teams</span></a>
+                           
                         </div>
                     </li>
                     <li class="item" id="settings">
@@ -108,7 +108,7 @@
                     window.location.href = 'login.html'; // Ensure only admins can access the admin dashboard
                 } else {
                     require('dotenv').config(); 
-                    fetch('http://192.168.1.6:8000/api/user-details/', {
+                    fetch('http://192.168.0.109:8000/api/user-details/', {
                         method: 'GET',
                         headers: {
                             'Authorization': 'Token ' + authToken,
@@ -143,7 +143,7 @@
                 window.location.href = 'login.html'; // Redirect to login on logout
             }
             function fetchAdminUsers() {
-            fetch('http://192.168.1.6:8000/api/staff-users/', {
+            fetch('http://192.168.0.109:8000/api/staff-users/', {
                 method: 'GET',
                 headers: {
                     'Authorization': 'Token ' + authToken,
@@ -168,7 +168,7 @@
         }
 
         function fetchUserDetails() {
-            fetch('http://192.168.1.6:8000/api/user-details/', {
+            fetch('http://192.168.0.109:8000/api/user-details/', {
                 method: 'GET',
                 headers: {
                     'Authorization': 'Token ' + authToken,

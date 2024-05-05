@@ -19,7 +19,7 @@
             if (!authToken) {
                 window.location.href = 'login.html';
             } else {
-                fetch('http://192.168.1.6:8000/api/user-details/', {
+                fetch('http://192.168.0.109:8000/api/user-details/', {
                     method: 'GET',
                     headers: {
                         'Authorization': 'Token ' + authToken,

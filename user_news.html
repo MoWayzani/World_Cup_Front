@@ -46,7 +46,7 @@
 
     <script>
         window.onload = function() {
-            fetch('http://192.168.1.6:8000/api/news/')
+            fetch('http://192.168.0.109:8000/api/news/')
             .then(response => response.json())
             .then(data => {
                 const newsContainer = document.getElementById('newsList');

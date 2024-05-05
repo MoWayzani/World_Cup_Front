@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Team</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+             background-image: url('assets/addadminjpg.jpg'); /* Replace 'background_image.jpg' with your actual image path */
+             background-size: cover;
+             background-position: center;
+             background-repeat: no-repeat;
+             background-attachment: fixed;
+             padding: 0;
+             margin: 0;
+         }
+         .container {
+           background-color: rgba(255, 255, 255, 0.7); /* Lighter background color with transparency */
+             border-radius: 10px;
+             box-shadow: 0 0 10px rgba(0,0,0,0.1);
+             padding: 30px;
+             margin-top: 50px;
+         }
+         .form-group label {
+             font-weight: bold;
+         }
+         .btn-primary {
+             background-color: #007bff;
+             border-color: #007bff;
+         }
+         .btn-primary:hover {
+             background-color: #0056b3;
+             border-color: #0056b3;
+         }
+     </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Create Team</h1>
+        <form id="teamForm" enctype="multipart/form-data" class="mt-4">
+            <div class="form-group">
+                <label for="teamName">Team Name</label>
+                <input type="text" class="form-control" id="teamName" placeholder="Enter team name" required>
+            </div>
+            <div class="form-group">
+                <label for="groupSelect">Group Name</label>
+                <select class="form-control" id="groupSelect">
+                    <option value="A">Group A</option>
+                    <option value="B">Group B</option>
+                    <option value="C">Group C</option>
+                    <option value="D">Group D</option>
+                    <option value="E">Group E</option>
+                    <option value="F">Group F</option>
+                    <option value="G">Group G</option>
+                    <option value="H">Group H</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="teamLogo">Team Logo</label>
+                <input type="file" class="form-control-file" id="teamLogo" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="admin.html" class="btn btn-primary ml-2">Back</a>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('teamForm').onsubmit = function(event) {
+            event.preventDefault();
+            const formData = new FormData();
+            formData.append('name', document.getElementById('teamName').value);
+            formData.append('group_name', document.getElementById('groupSelect').value);
+            formData.append('logo', document.getElementById('teamLogo').files[0]);
+
+            fetch('http://192.168.0.109:8000/api/teams/', {
+                method: 'POST',
+                body: formData  // FormData will set the Content-Type to 'multipart/form-data'
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert('Team created successfully!');
+                document.getElementById('teamForm').reset(); // Reset the form after successful submission
+            })
+            .catch(error => {
+                alert('Error creating team: ' + error.message);
+            });
+        };
+    </script>
+</body>
+</html>
