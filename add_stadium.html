@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Stadium</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+             background-image: url('assets/addadminjpg.jpg'); /* Replace 'background_image.jpg' with your actual image path */
+             background-size: cover;
+             background-position: center;
+             background-repeat: no-repeat;
+             background-attachment: fixed;
+             padding: 0;
+             margin: 0;
+         }
+         .container {
+           background-color: rgba(255, 255, 255, 0.7); /* Lighter background color with transparency */
+             border-radius: 10px;
+             box-shadow: 0 0 10px rgba(0,0,0,0.1);
+             padding: 30px;
+             margin-top: 50px;
+         }
+         .form-group label {
+             font-weight: bold;
+         }
+         .btn-primary {
+             background-color: #007bff;
+             border-color: #007bff;
+         }
+         .btn-primary:hover {
+             background-color: #0056b3;
+             border-color: #0056b3;
+         }
+     </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Add a New Stadium</h1>
+        <form id="addStadiumForm" class="mt-4">
+            <div class="form-group">
+                <label for="name">Stadium Name</label>
+                <input type="text" class="form-control" id="name" required>
+            </div>
+            <div class="form-group">
+                <label for="seats">Number of Seats</label>
+                <input type="number" class="form-control" id="seats" required>
+            </div>
+            <div class="form-group">
+                <label for="location">Location</label>
+                <input type="text" class="form-control" id="location" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+    <script>
+         window.onload = function() {
+                const authToken = sessionStorage.getItem('authToken');
+                const isStaff = sessionStorage.getItem('isStaff') === 'true';
+    
+                if (!authToken || !isStaff) {
+                    window.location.href = 'login.html'; // Ensure only admins can access the admin dashboard
+                } else {
+        document.getElementById('addStadiumForm').onsubmit = function(event) {
+            event.preventDefault(); // Prevent the default form submission
+            const name = document.getElementById('name').value;
+            const seats = document.getElementById('seats').value;
+            const location = document.getElementById('location').value;
+
+            // Constructing the body of the request
+            const stadiumData = {
+                name: name,
+                seats: seats,
+                location: location
+            };
+
+            fetch('http://192.168.0.109:8000/api/stadiums/add/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(stadiumData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);  // Logging the response data
+                alert('Stadium added successfully!');
+                // Optionally reset the form or redirect the user
+                document.getElementById('addStadiumForm').reset();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to add the stadium.');
+            });
+        };
+    }
+}
+    </script>
+</body>
+</html>
