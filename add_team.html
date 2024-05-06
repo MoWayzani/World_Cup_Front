@@ -54,6 +54,24 @@
                     <option value="F">Group F</option>
                     <option value="G">Group G</option>
                     <option value="H">Group H</option>
+                    <option value="H">Group I</option>
+                    <option value="H">Group J</option>
+                    <option value="H">Group K</option>
+                    <option value="H">Group L</option>
+                    <option value="H">Group M</option>
+                    <option value="H">Group N</option>
+                    <option value="H">Group O</option>
+                    <option value="H">Group P</option>
+                    <option value="H">Group Q</option>
+                    <option value="H">Group R</option>
+                    <option value="H">Group S</option>
+                    <option value="H">Group T</option>
+                    <option value="H">Group U</option>
+                    <option value="H">Group V</option>
+                    <option value="H">Group W</option>
+                    <option value="H">Group X</option>
+                    <option value="H">Group Y</option>
+                    <option value="H">Group Z</option>
                 </select>
             </div>
             <div class="form-group">
@@ -66,6 +84,13 @@
     </div>
 
     <script>
+        window.onload = function() {
+                const authToken = sessionStorage.getItem('authToken');
+                const isStaff = sessionStorage.getItem('isStaff') === 'true';
+    
+                if (!authToken || !isStaff) {
+                    window.location.href = 'login.html'; // Ensure only admins can access the admin dashboard
+                } else {
         document.getElementById('teamForm').onsubmit = function(event) {
             event.preventDefault();
             const formData = new FormData();
@@ -91,6 +116,8 @@
                 alert('Error creating team: ' + error.message);
             });
         };
+    }
+}
     </script>
 </body>
 </html>

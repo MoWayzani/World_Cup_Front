@@ -5,11 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Team</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            background-color: wheat;
+    background-image: url('assets/addadminjpg.jpg');  /* Path to your background image */
+    background-size: cover;  /* Cover the entire viewport */
+    background-position: center;  /* Center the background image */
+    background-repeat: no-repeat;  /* Sets a light gray background for better contrast */
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.7); 
+            border: 1px solid #333;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Adds subtle shadow for depth */
+            margin-top: 40px; /* More space on the top */
+        }
+        .form-group label {
+            font-weight: bold; /* Makes labels bold */
+        }
+        .btn-success {
+            width: 100%; /* Full width button */
+            padding: 10px; /* Larger padding for a better click area */
+        }
+        @media (min-width: 768px) {
+            .container {
+                margin-top: 60px; /* More top margin on larger screens */
+            }
+        }
+    </style>
+    
 </head>
 <body>
     <div class="container">
-        <h1 class="mt-5">Edit Team</h1>
-        <form id="editTeamForm" class="mt-4" enctype="multipart/form-data">
+        <a href="display_teams.html" class="btn btn-primary mb-3">Back to List</a> <!-- Back button -->
+        <h1 class="mt-2 mb-4">Edit Team</h1>
+        <form id="editTeamForm" enctype="multipart/form-data">
             <input type="hidden" id="teamId">
             <div class="form-group">
                 <label for="teamName">Team Name</label>
@@ -39,11 +71,18 @@
                 <label for="points">Points</label>
                 <input type="number" class="form-control" id="points" required>
             </div>
-            <button type="submit" class="btn btn-success">Submit</button>
+            <button type="submit" class="btn btn-success">Update Team</button>
         </form>
     </div>
 
     <script>
+         window.onload = function() {
+                const authToken = sessionStorage.getItem('authToken');
+                const isStaff = sessionStorage.getItem('isStaff') === 'true';
+    
+                if (!authToken || !isStaff) {
+                    window.location.href = 'login.html'; // Ensure only admins can access the admin dashboard
+                } else {
         const params = new URLSearchParams(window.location.search);
         const teamId = params.get('id');
     
@@ -89,6 +128,8 @@
                 .catch(error => alert('Error updating team: ' + error.message));
             };
         };
+    }
+}
     </script>
     
 </body>
