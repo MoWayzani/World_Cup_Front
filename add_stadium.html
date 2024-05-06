@@ -54,7 +54,7 @@
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
-
+    <script src="config.js"></script>
     <script>
          window.onload = function() {
                 const authToken = sessionStorage.getItem('authToken');
@@ -76,7 +76,7 @@
                 location: location
             };
 
-            fetch('http://192.168.0.109:8000/api/stadiums/add/', {
+            fetch(`${BASE_URL}/stadiums/add/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

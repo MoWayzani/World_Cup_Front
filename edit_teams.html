@@ -74,63 +74,73 @@
             <button type="submit" class="btn btn-success">Update Team</button>
         </form>
     </div>
-
+    <script src="config.js"></script>
+    
     <script>
-         window.onload = function() {
-                const authToken = sessionStorage.getItem('authToken');
-                const isStaff = sessionStorage.getItem('isStaff') === 'true';
+        window.onload = function() {
+            const authToken = sessionStorage.getItem('authToken');
+            const isStaff = sessionStorage.getItem('isStaff') === 'true';
     
-                if (!authToken || !isStaff) {
-                    window.location.href = 'login.html'; // Ensure only admins can access the admin dashboard
-                } else {
-        const params = new URLSearchParams(window.location.search);
-        const teamId = params.get('id');
+            if (!authToken || !isStaff) {
+                window.location.href = 'login.html'; // Redirect non-admins to the login page
+            } else {
+                const params = new URLSearchParams(window.location.search);
+                const teamId = params.get('id');
     
-        window.onload = () => {
-            fetch(`http://192.168.0.109:8000/api/teams/${teamId}/`)
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('teamName').value = data.name;
-                document.getElementById('group_name').value = data.group_name;
-                document.getElementById('matches_played').value = data.matches_played;
-                document.getElementById('wins').value = data.wins;
-                document.getElementById('draws').value = data.draws;
-                document.getElementById('losses').value = data.losses;
-                document.getElementById('points').value = data.points;
-            })
-            .catch(error => console.error('Failed to fetch team details:', error));
+                // Fetch team details and populate the form
+                fetch(`${BASE_URL}/teams/${teamId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('teamName').value = data.name;
+                    document.getElementById('group_name').value = data.group_name;
+                    document.getElementById('matches_played').value = data.matches_played;
+                    document.getElementById('wins').value = data.wins;
+                    document.getElementById('draws').value = data.draws;
+                    document.getElementById('losses').value = data.losses;
+                    document.getElementById('points').value = data.points;
+                })
+                .catch(error => {
+                    console.error('Failed to fetch team details:', error);
+                    alert('Failed to load team details.');
+                });
     
-            document.getElementById('editTeamForm').onsubmit = function(event) {
-                event.preventDefault();
-                const updatedData = {
-                    name: document.getElementById('teamName').value,
-                    group_name: document.getElementById('group_name').value,
-                    matches_played: parseInt(document.getElementById('matches_played').value),
-                    wins: parseInt(document.getElementById('wins').value),
-                    draws: parseInt(document.getElementById('draws').value),
-                    losses: parseInt(document.getElementById('losses').value),
-                    points: parseInt(document.getElementById('points').value)
+                // Setup form submission handler
+                document.getElementById('editTeamForm').onsubmit = function(event) {
+                    event.preventDefault();
+                    const updatedData = {
+                        name: document.getElementById('teamName').value,
+                        group_name: document.getElementById('group_name').value,
+                        matches_played: parseInt(document.getElementById('matches_played').value),
+                        wins: parseInt(document.getElementById('wins').value),
+                        draws: parseInt(document.getElementById('draws').value),
+                        losses: parseInt(document.getElementById('losses').value),
+                        points: parseInt(document.getElementById('points').value)
+                    };
+    
+                    fetch(`${BASE_URL}/teams/${teamId}/`, {
+                        method: 'PUT',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify(updatedData)
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            alert('Team updated successfully!');
+                            window.location.href = 'display_teams.html'; // Redirect back to the teams list
+                        } else {
+                            response.json().then(data => {
+                                alert('Failed to update team: ' + (data.message || 'Unknown error'));
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error updating team:', error);
+                        alert('Error updating team: ' + error.message);
+                    });
                 };
-    
-                fetch(`http://192.168.0.109:8000/api/teams/${teamId}/`, {
-                    method: 'PUT',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(updatedData)
-                })
-                .then(response => {
-                    if (response.ok) {
-                        alert('Team updated successfully!');
-                        window.location.href = 'display_teams.html'; // Redirect back to the teams list
-                    } else {
-                        alert('Failed to update team.');
-                    }
-                })
-                .catch(error => alert('Error updating team: ' + error.message));
-            };
-        };
-    }
-}
+            }
+        }
     </script>
+    
     
 </body>
 </html>

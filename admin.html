@@ -6,6 +6,14 @@
         <link rel="stylesheet" href="admin.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
+        <style>
+            .profile {
+                color: white;
+                padding: 10px; 
+                text-align: center; 
+            }
+        </style>
+        
     </head>
     <body>
 
@@ -19,8 +27,10 @@
                         <i class="fas fa-bars"></i>
                     </div>
                     <ul>
-                        <li><a href="#"><i class="fas fa-search"></i></a></li>
-                        <li><a href="#"><i class="fas fa-bell"></i></a></li>
+                          <center class="profile">
+                        
+                        <p> <span id="userName">Loading...</span></p>
+                    </center>
                         <li><a href="#"><i class="fas fa-power-off" onclick="logout()" class="btn btn-danger"></i></a></li>
                     </ul>
                 </div>
@@ -29,10 +39,7 @@
             <!--sidebar start-->
             <div class="sidebar">
                 <div class="sidebar-menu">
-                    <center class="profile">
-                        
-                        <p> <span id="userName">Loading...</span></p>
-                    </center>
+                  
                     <li class="item">
                         <a href="#" class="menu-btn">
                             <i class="fas fa-desktop"></i><span>Dashboard</span>
@@ -96,6 +103,7 @@
             <!--main container end-->
         </div>
         <!--wrapper end-->
+        <script src="config.js"></script>
         <script>
            // Import and configure dotenv
 
@@ -108,7 +116,7 @@
                     window.location.href = 'login.html'; // Ensure only admins can access the admin dashboard
                 } else {
                     require('dotenv').config(); 
-                    fetch('http://192.168.0.109:8000/api/user-details/', {
+                    fetch(`${BASE_URL}/login/`, {
                         method: 'GET',
                         headers: {
                             'Authorization': 'Token ' + authToken,
@@ -143,7 +151,7 @@
                 window.location.href = 'login.html'; // Redirect to login on logout
             }
             function fetchAdminUsers() {
-            fetch('http://192.168.0.109:8000/api/staff-users/', {
+            fetch(`${BASE_URL}/staff-users/`, {
                 method: 'GET',
                 headers: {
                     'Authorization': 'Token ' + authToken,
@@ -168,7 +176,7 @@
         }
 
         function fetchUserDetails() {
-            fetch('http://192.168.0.109:8000/api/user-details/', {
+            fetch(`${BASE_URL}/user-details/`, {
                 method: 'GET',
                 headers: {
                     'Authorization': 'Token ' + authToken,
@@ -187,8 +195,8 @@
         }
 
         function confirmDelete(userId) {
-            if (confirm("Are you sure you want to delete this user?")) {
-                fetch(`http://192.168.1.6:8000/api/delete-user/${userId}/`, {
+            if (confirm("Are you sure you want to delete this admin?")) {
+                fetch(`${BASE_URL}/delete-user/${userId}/`, {
                     method: 'DELETE',
                     headers: {
                         'Authorization': 'Token ' + authToken
@@ -196,7 +204,7 @@
                 })
                 .then(response => {
                     if (response.ok) {
-                        alert('User deleted successfully.');
+                        alert('admin deleted successfully.');
                         fetchAdminUsers();  // Re-fetch the list to update the display
                     } else {
                         alert('Failed to delete user.');

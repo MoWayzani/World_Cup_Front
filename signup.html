@@ -46,7 +46,7 @@
     <button type="submit" class="submit">Submit</button>
     <p class="signin">Already have an account? <a href="login.html">Sign in</a> </p>
 </form>
-          
+<script src="config.js"></script>
 <script>
     document.getElementById("signupForm").onsubmit = function(event) {
         event.preventDefault();
@@ -61,7 +61,7 @@
             
         };
 
-        fetch('http://192.168.0.109:8000/api/signup/', {
+        fetch(`${BASE_URL}/signup/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

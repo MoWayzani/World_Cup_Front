@@ -14,7 +14,7 @@
         <div class="user-table" id="usersList">Loading users...</div>
     </div>
 
-   
+    <script src="config.js"></script>
     <script>
     window.onload = function() {
         const authToken = sessionStorage.getItem('authToken');
@@ -23,7 +23,7 @@
         if (!authToken || !isStaff) {
             window.location.href = 'login.html'; // Redirect if not authenticated or not staff
         } else {
-            fetch('http://192.168.0.109:8000/api/non-staff-users/', {
+            fetch(`${BASE_URL}/non-staff-users/`, {
                 method: 'GET',
                 headers: {
                     'Authorization': 'Token ' + authToken,

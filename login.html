@@ -28,13 +28,14 @@
 </form>
           
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="config.js"></script>
 <script>
     document.getElementById('loginForm').onsubmit = function(event) {
         event.preventDefault();
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
 
-        fetch('http://192.168.0.109:8000/api/login/', {
+        fetch(`${BASE_URL}/login/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -12,14 +12,14 @@
         <p>Welcome, <span id="userName">Loading...</span>!</p>
         <button onclick="logout()" class="btn btn-danger">Logout</button>
     </div>
-
+    <script src="config.js"></script>
     <script>
         window.onload = function() {
             const authToken = sessionStorage.getItem('authToken');
             if (!authToken) {
                 window.location.href = 'login.html';
             } else {
-                fetch('http://192.168.0.109:8000/api/user-details/', {
+                fetch(`${BASE_URL}/user-details/`, {
                     method: 'GET',
                     headers: {
                         'Authorization': 'Token ' + authToken,

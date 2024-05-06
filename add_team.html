@@ -82,7 +82,7 @@
             <a href="admin.html" class="btn btn-primary ml-2">Back</a>
         </form>
     </div>
-
+    <script src="config.js"></script>
     <script>
         window.onload = function() {
                 const authToken = sessionStorage.getItem('authToken');
@@ -98,7 +98,7 @@
             formData.append('group_name', document.getElementById('groupSelect').value);
             formData.append('logo', document.getElementById('teamLogo').files[0]);
 
-            fetch('http://192.168.0.109:8000/api/teams/', {
+            fetch(`${BASE_URL}/teams/`, {
                 method: 'POST',
                 body: formData  // FormData will set the Content-Type to 'multipart/form-data'
             })
