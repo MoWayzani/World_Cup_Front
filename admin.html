@@ -151,29 +151,38 @@
                 window.location.href = 'login.html'; // Redirect to login on logout
             }
             function fetchAdminUsers() {
-            fetch(`${BASE_URL}/staff-users/`, {
-                method: 'GET',
-                headers: {
-                    'Authorization': 'Token ' + authToken,
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (!data || !data.results || !Array.isArray(data.results)) {
-                    console.error('Expected an array in the results but got:', data);
-                    document.getElementById('adminList').textContent = 'Data format error, please check the console for details.';
-                    return;
-                }
-                
-                const adminListContainer = document.getElementById('adminList');
-                adminListContainer.innerHTML = data.results.map(admin => `<div>${admin.username} - ${admin.email} - ${admin.first_name} ${admin.last_name} <button onclick="confirmDelete(${admin.id})">Delete</button></div>`).join('');
-            })
-            .catch(error => {
-                console.error('Error fetching admin users:', error);
-                document.getElementById('adminList').textContent = 'Failed to load admin users.';
-            });
+    fetch(`${BASE_URL}/staff-users/`, {
+        method: 'GET',
+        headers: {
+            'Authorization': 'Token ' + authToken,
+            'Content-Type': 'application/json'
         }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (!data || !data.results || !Array.isArray(data.results)) {
+            console.error('Expected an array in the results but got:', data);
+            document.getElementById('adminList').textContent = 'Data format error, please check the console for details.';
+            return;
+        }
+        
+        const adminListContainer = document.getElementById('adminList');
+        // Initialize the table with styling for clearer columns
+        let tableHtml = '<table class="table" style="width: 100%; border-collapse: collapse;">';
+        tableHtml += '<thead><tr><th style="border: 1px solid #ddd; padding: 8px;">Username</th><th style="border: 1px solid #ddd; padding: 8px;">Email</th><th style="border: 1px solid #ddd; padding: 8px;">First Name</th><th style="border: 1px solid #ddd; padding: 8px;">Last Name</th><th style="border: 1px solid #ddd; padding: 8px;">Action</th></tr></thead><tbody>';
+
+        // Add rows for each admin with border and padding for separation
+        tableHtml += data.results.map(admin => `<tr><td style="border: 1px solid #ddd; padding: 8px;">${admin.username}</td><td style="border: 1px solid #ddd; padding: 8px;">${admin.email}</td><td style="border: 1px solid #ddd; padding: 8px;">${admin.first_name}</td><td style="border: 1px solid #ddd; padding: 8px;">${admin.last_name}</td><td style="border: 1px solid #ddd; padding: 8px;"><button onclick="confirmDelete(${admin.id})">Delete</button></td></tr>`).join('');
+        
+        tableHtml += '</tbody></table>';
+        adminListContainer.innerHTML = tableHtml;
+    })
+    .catch(error => {
+        console.error('Error fetching admin users:', error);
+        document.getElementById('adminList').textContent = 'Failed to load admin users.';
+    });
+}
+
 
         function fetchUserDetails() {
             fetch(`${BASE_URL}/user-details/`, {

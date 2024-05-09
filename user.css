@@ -349,11 +349,10 @@ nav {
     align-items: center;
     background-image: url("assets/stages.webp");
     background-position: 50px;
-    
     background-size: contain;
     background-repeat: no-repeat;
   }
-  
+
   .service__container {
     padding: 0;
     display: grid;

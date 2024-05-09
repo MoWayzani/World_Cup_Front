@@ -1,0 +1,45 @@
+.group {
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.group-title {
+    background-color: #f7f7f7;
+    color: #333;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.group-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-gap: 20px;
+    padding: 10px;
+}
+body {
+    background-color:darkgrey ; /* Replace 'your-image-url.jpg' with the actual path to your image */
+    background-size: cover; /* Cover the entire page */
+    background-position: center; /* Center the background image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    margin: 0;
+    padding: 0;
+    
+}
+
+/* Optional: Adding a background overlay for better readability */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Adjust color and transparency as needed */
+    z-index: 1; /* Ensure it's below content */
+}
+
+/* Ensuring content is above the overlay */
+.container {
+    position: relative;
+    z-index: 2;
+}
