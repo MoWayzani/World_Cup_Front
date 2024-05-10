@@ -6,8 +6,101 @@
   --text-dark: #0c0a09;
   --text-light: #78716c;
   --white: white;
-  --max-width: 1200px;
+  --max-width: 1470px;
 }
+#countdown {
+  display: flex;
+  text-align: center;
+}
+
+.time {
+  margin: 0 15px;
+}
+
+.time-number {
+  font-size: 50px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.time-label {
+  font-size: 16px;
+  color: #ccc;
+}
+/* style.css */
+* {
+  box-sizing: border-box;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+.header .nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: black;
+  padding: 0 20px;
+  position: fixed; /* This makes the navbar fixed at the top */
+  width: 100%; /* Ensures the navbar extends full width */
+  top: 0; /* Fixes the navbar to the top of the viewport */
+  z-index: 1000; /* Ensures navbar stays on top of other content */
+}
+
+/* Adds padding to the body to ensure content doesn't hide behind the navbar */
+body {
+  padding-top: 60px; /* Adjust based on your navbar's height */
+}
+
+.nav__bar .logo img {
+  height: 50px;
+}
+
+.nav__links {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+}
+
+.nav__links li a {
+  display: block;
+  padding: 10px 15px;
+  color: white;
+  text-decoration: none;
+}
+
+.nav__btn {
+  background-color: red; /* Red Book Now button */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-left: auto; /* Pushes the button to the far right of the nav */
+}
+
+.nav__btn:hover {
+  background-color: darkred;
+}
+
+.nav__menu__btn {
+  display: none;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .nav__links {
+      display: none; /* Hide links on smaller screens */
+  }
+
+  .nav__menu__btn {
+      display: block; /* Show menu button on smaller screens */
+  }
+}
+
+
 
 * {
   padding: 0;

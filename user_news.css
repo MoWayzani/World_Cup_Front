@@ -1,0 +1,214 @@
+:root {
+    --primary-color: #DC143C;
+    --primary-color-dark: #bc1c5c;
+    --text-dark: #0c0a09;
+    --text-light: #78716c;
+    --white: white;
+    --max-width: 1470px;
+  }
+
+* {
+    box-sizing: border-box;
+  }
+          body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .header .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: black;
+    padding: 0 20px;
+    position: fixed; /* This makes the navbar fixed at the top */
+    width: 100%; /* Ensures the navbar extends full width */
+    top: 0; /* Fixes the navbar to the top of the viewport */
+    z-index: 1000; /* Ensures navbar stays on top of other content */
+  }
+    
+  
+  
+  .nav__bar .logo img {
+    height: 50px;
+  }
+  
+  .nav__links {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .nav__links li a {
+    display: block;
+    padding: 10px 15px;
+    color: white;
+    text-decoration: none;
+  }
+  
+ 
+  
+  .nav__menu__btn {
+    display: none;
+    cursor: pointer;
+  }
+  
+  @media (max-width: 768px) {
+    .nav__links {
+        display: none; /* Hide links on smaller screens */
+    }
+  
+    .nav__menu__btn {
+        display: block; /* Show menu button on smaller screens */
+    }
+  }
+  
+  
+  
+
+  
+  .section__container {
+    max-width: var(--max-width);
+    margin: auto;
+    padding: 5rem 1rem;
+  }
+  
+  .section__subheader {
+    margin-bottom: 0.5rem;
+    position: relative;
+    font-weight: 500;
+    letter-spacing: 2px;
+    color: var(--text-dark);
+  }
+  
+  .section__subheader::after {
+    position: absolute;
+    content: "";
+    top: 50%;
+    transform: translate(1rem, -50%);
+    height: 2px;
+    width: 4rem;
+    background-color: var(--primary-color);
+  }
+  
+  .section__header {
+  
+    max-width: 600px;
+    margin-bottom: 1rem;
+    font-size: 2.5rem;
+    font-weight: 600;
+    line-height: 3rem;
+    color: var(--text-dark);
+  }
+  
+  .section__description {
+    max-width: 600px;
+    margin-bottom: 1rem;
+    color: var(--text-light);
+  }
+  
+ 
+
+  
+  img {
+    width: 100%;
+    display: flex;
+  }
+  
+  a {
+    text-decoration: none;
+  }
+  
+  .logo {
+    max-width: 120px;
+    margin-top: 2px;
+  }
+  
+  nav {
+    position: fixed;
+    isolation: isolate;
+    top: 0;
+    width: 100%;
+    max-width: var(--max-width);
+    margin: auto;
+    z-index: 9;
+  }
+  
+  .nav__bar {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    background-color: var(--primary-color);
+    
+  }
+  
+  
+  .nav__menu__btn {
+    font-size: 1.5rem;
+    color: var(--white);
+    cursor: pointer;
+  }
+  
+  /* Add this to your existing CSS */
+  #nav-links {
+      position: fixed;
+      top: 0;
+      
+      list-style: none;
+      display: flex;
+    
+      align-items: center;
+      flex-direction: row;
+      gap: 2rem; 
+      width: 100%;
+     justify-content: center;
+      left: 1%;
+      z-index: 100;
+  }
+  
+  
+  .nav__links.open {
+    transform: translateY(0);
+  }
+  
+  .nav__links a {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    isolation: isolate;
+    padding-bottom: 8px;
+    color: var(--white);
+    transition: 0.3s;
+  }
+  
+  .nav__btn {
+    display: none;
+  }
+  
+  .header__container {
+    padding-block: 10rem 15rem;
+  }
+  
+  .header__container p {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    color: var(--white);
+    text-align: center;
+    opacity: 0.6;
+  }
+  
+  .header__container h1 {
+    font-size: 4rem;
+    font-weight: 500;
+    line-height: 4.5rem;
+    color: var(--white);
+    text-align: center;
+  }
+  
+  .header__container h1 span {
+    color: var(--primary-color);
+  }
+  

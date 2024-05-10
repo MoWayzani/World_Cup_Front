@@ -5,40 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin News Page</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-        .container {
-            margin-top: 50px;
-        }
-        .card {
-            margin-bottom: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .card-title {
-            font-weight: bold;
-            font-size: 24px;
-        }
-        .card-img {
-            width: 100%;
-            height: auto;
-            border-radius: 5px 5px 0 0;
-        }
-        .card-body {
-            padding: 20px;
-        }
-        .card-text {
-            font-size: 18px;
-        }
-        .card-date {
-            font-size: 14px;
-            color: #6c757d;
-        }
-    </style>
+    <link rel="stylesheet" href="user_news.css">
 </head>
 <body>
+    
+    <header class="header">
+        <nav class="nav">
+            <div class="nav__bar">
+                <div class="logo">
+                    <a href="#"><img src="assets/logo.png" alt="FIFA Logo"></a>
+                </div>
+                <div class="nav__menu__btn" id="menu-btn">
+                    <i class="ri-menu-line"></i>
+                </div>
+            </div>
+            <ul class="nav__links" id="nav-links">
+                <li><a href="user.html">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#rules">Rules</a></li>
+                <li><a href="user_news.html">News</a></li>
+                <li><a href="Groupstage.html">Group Stage</a></li>
+                <li><a href="quiz.html">Quiz</a></li>
+            </ul>
+        </nav>
+        <div class="section__container header__container" id="home">
+        </div>
+    </header>
+
     <div class="container">
         <h1 class="mt-5">News List</h1>
         <div id="newsList" class="mt-3"></div>

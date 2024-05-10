@@ -23,14 +23,16 @@
     padding: 10px;
 }
 body {
-    background-color: skyblue; /* Replace 'your-image-url.jpg' with the actual path to your image */
-    background-size: cover; /* Cover the entire page */
+    background-image: url('assets/login.jpg'); /* Replace 'your-image-url.jpg' with the actual path to your image */
+    background-size: cover; /* Cover the entire background */
     background-position: center; /* Center the background image */
     background-repeat: no-repeat; /* Do not repeat the image */
+    background-attachment: fixed; /* Keep the background image fixed during scrolling */
     margin: 0;
     padding: 0;
-    
+    height: 100%; /* Ensure body takes the minimum necessary height */
 }
+
 
 /* Optional: Adding a background overlay for better readability */
 .overlay {
@@ -47,4 +49,5 @@ body {
 .container {
     position: relative;
     z-index: 2;
+   
 }

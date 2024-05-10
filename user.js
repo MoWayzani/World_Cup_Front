@@ -73,7 +73,7 @@ const minute = second * 60
 const hour = minute * 60
 const day = hour * 24
 
-const kickOffWorldCupDate = new Date('2022-11-21 07:00:00')
+const kickOffWorldCupDate = new Date('2026-11-21 07:00:00')
 
 function zeroLeft (number) {
     return String(number).padStart(2, '0')
