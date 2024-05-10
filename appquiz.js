@@ -1,6 +1,4 @@
-/* ========================
- ! - Important DOM Elements
- ==========================*/
+
  const darkModeToggle = document.querySelector("#chk");
  const modalOpenBtn = document.getElementById("condition-modal-btn");
  const modalContainer = document.querySelector(".quiz-modal-container");
@@ -28,31 +26,23 @@
  const backHome = resultSection.querySelector(".back-to-home");
  const loadingContainer = document.querySelector(".loading-container");
  
- /* =====================
-  ! - Important Variables - *
-  =======================*/
+
  let questionIndex = 0;
  let timeCount;
  let userScore = 0;
- let counter; // it will track the timer
+ let counter; 
  let timelineCounter;
- 
- /* ===================
-  ! - Important Elements - *
-  =====================*/
- // tick icon
+
  const tick = document.createElement("div");
  tick.classList.add("tick-icon");
  tick.innerHTML = `<i class="fa-solid fa-check"></i>`;
  
- // cross icon
+
  const cross = document.createElement("div");
  cross.classList.add("cross-icon");
  cross.innerHTML = `<i class="fa-solid fa-xmark"></i>`;
  
- /* ===================
-  ! - Confetti Settings - *
-  ====================*/
+
  var confettiSettings = {
    target: "my-canvas",
    max: "250",
@@ -63,13 +53,7 @@
  };
  var confetti = new ConfettiGenerator(confettiSettings);
  
- /* ========================
-  ! - Important Functions - *
-  ==========================*/
  
- /*
-  ! - Modal Open/Close Fuction - *
-  */
  const modalFunc = (condition) => {
    if (condition === "open") {
      modalConditionBox.classList.add("active");
@@ -89,7 +73,7 @@
      }
    }
  };
- // Replace the existing quizArr with the result of getRandomQuestions()
+
  const quizArr = 
  [
      {
@@ -205,7 +189,7 @@
    ];
    
    const quizArra = getRandomQuestions();
-// Now your quizArr contains only 10 randomly selected questions
+
 
 function getRandomQuestions() {
   const shuffled = quizArr.sort(() => Math.random() - 0.5);
@@ -214,48 +198,42 @@ function getRandomQuestions() {
 
 
 
- /*
- ! - Initial show Function
-  * - // initial setup before showing question
- * - // it is used in for later restart and back to home event listener
-  */
+
  const initialShowQuestion = () => {
-   //Remove the result sections
+ 
    resultSection.classList.remove("active");
    canvas.style.display = "none";
  
-   // the question and score will start from the 0
+  
    questionIndex = 0;
    userScore = 0;
    scoreElement.textContent = userScore;
  };
  
- /*
-  ! - Show Question Function - *
-  */
+
  const showQuestion = () => {
-   // show Question Section
+ 
    questionSection.classList.add("active");
  
-   // Start the timer
+  
    timer();
  
-   // Start the timelineFunc
+   
    timelineFunc();
  
-   // If there is any single option, remove the all option
+  
    if (document.querySelectorAll(".single-option")) {
      document
        .querySelectorAll(".single-option")
        .forEach((element) => element.remove());
    }
  
-   // showing question text
+ 
    questionText.textContent = `${questionIndex + 1}. ${
      quizArr[questionIndex].question
    }`;
  
-   // Showing question Options
+  
    const options = quizArr[questionIndex].options;
  
    for (let option in options) {
@@ -269,44 +247,40 @@ function getRandomQuestions() {
      questionOptionContainer.append(singleQuestionElement);
    }
  
-   // Question Progress Text
+  
    questionProgress();
  
-   // user can not see the next quiz button initially
+
    nextQuiz.style.display = "none";
  };
  
- /*
-  ! - Timeline Fuction - *
-  */
+ 
  const timelineFunc = () => {
-   // initially the width will be 100%
+  
    timelineElement.style.width = `100%`;
    timeText.textContent = 10;
  
    timelineCounter = setInterval(() => {
-     // get the time
+     
      const getTime = Number(timeText.textContent);
  
-     // the width will change, according to the time
+   
      timelineElement.style.width = `${getTime * 10}%`;
    }, 1000);
  };
  
- /*
-  ! - After select an option, this selected answer function will be triggered - *
-  */
+
  const selectedAnswer = (option, e) => {
-   // clear the time
+   
    clearInterval(counter);
  
-   // clear the timeline
+  
    clearInterval(timelineCounter);
  
-   // Get the Correct Answer
+   
    const selectedOption = option;
    const correctOption = quizArr[questionIndex].answer;
-   //  Checking condition
+  
    if (selectedOption === correctOption) {
      userScore += 5;
      scoreElement.textContent = userScore;
@@ -316,17 +290,15 @@ function getRandomQuestions() {
      showCorrectAnswer();
    }
  
-   // After selected an option, User can not select any of the option again
+  
    const singleOption = document.querySelectorAll(".single-option");
    singleOption.forEach((element) => element.classList.add("disabled"));
  
-   // show the next question button
+  
    nextQuizBtnChange();
  };
  
- /*
- ! - Show Icon Tick Function
- */
+
  const showIconTick = (e, isTick) => {
    if (e.target.classList.contains("single-option")) {
      e.target.children[0].insertAdjacentElement(
@@ -342,77 +314,69 @@ function getRandomQuestions() {
    }
  };
  
- /*
- ! - Show Correct Answer Function
- */
+
  const showCorrectAnswer = () => {
-   // find all single options
+   
    const singleOption = document.getElementsByClassName("single-option");
  
-   // correct answer
+  
    const correctOption = quizArr[questionIndex].answer;
  
-   // looping the option and show the correct option with tick
+   
    for (let option of singleOption) {
      if (option.textContent.trim().slice(0, 1) == correctOption) {
        option.children[0].insertAdjacentElement("afterend", tick);
        option.classList.add("correct");
      }
  
-     // After showing the correct Answer, disable all the option
+    
      option.classList.add("disabled");
    }
  };
  
- /*
- ! -  Question Progress Function
- */
+ 
  const questionProgress = () => {
-   // Question Progress Loading
+  
    questionProgressbar.style.width = `${
      ((questionIndex + 1) / quizArr.length) * 100
    }%`;
  
-   // Question Progress Text
+  
    questionProgressText.innerHTML = `<span class="bold">${
      questionIndex + 1
    } </span> of  <span class="bold">${quizArr.length}</span> Questions`;
  };
  
- /*
- ! - Timer Function
- */
+
  const timer = () => {
-   // initially the time start from 10 seconds
+  
    timeCount = 10;
    timeText.textContent = timeCount;
    counter = setInterval(() => {
      timeCount--;
      timeText.textContent = timeCount;
      if (timeCount == 0) {
-       // The score and the timeline width will be 0
+      
        timeText.textContent = "0" + timeCount;
        timelineElement.style.width = `0%`;
  
-       // Clear the time counter and timeline counter
+      
        clearInterval(counter);
        clearInterval(timelineCounter);
  
-       // show the correct answer
+    
        showCorrectAnswer();
  
-       // show the next question button
+       
        nextQuizBtnChange();
      } else {
-       // Show the time
+      
        timeText.textContent = "0" + timeCount;
      }
    }, 1000);
  };
  
- /*
- ! - Next Quiz Button Change function
- */
+ 
  const nextQuizBtnChange = () => {
    nextQuiz.style.display = "block";
    if (questionIndex === quizArr.length - 1) {
@@ -422,26 +386,22 @@ function getRandomQuestions() {
    }
  };
  
- /*
- ! - Show Result Function
- */
+
  const showResult = () => {
    questionSection.classList.remove("active");
    resultSection.classList.add("active");
    canvas.style.display = "block";
  
-   // Show the result in the result text
+ 
    resultText.textContent = `You scored ${userScore} points`;
  
-   // Giving feedback
+ 
    scoreFeedback(userScore);
  };
  
- /*
- ! - Score Feedback Function
- */
+
  const scoreFeedback = (userScore) => {
-   // the result will show according to the score
+  
    if (userScore >= 80 && userScore <= 100) {
      confettiStart();
      resultFeedback.textContent = `You are an expert in WorldCup, well done on your outstanding performance. Keep up the good work and continue to showcase your skills.`;
@@ -458,45 +418,39 @@ function getRandomQuestions() {
    }
  };
  
- /*
- ! - Confetti Start Functionality
- */
+
  const confettiStart = () => {
    setTimeout(() => confetti.render(), 500);
  };
  
- /* ==========================
- ! - Event Listeners
- ============================*/
- 
- // Switch dark mode event listener
+
  darkModeToggle.addEventListener("click", () => {
    document.body.classList.toggle("dark-mode");
  });
  
- // Modal Open Button Event listener
+
  modalOpenBtn.addEventListener("click", () => {
    modalFunc("open");
  });
  
- // Exit Modal Button Event Listener
+
  exitModal.addEventListener("click", () => {
    modalFunc("close");
  });
  
- //When Click on the modal container, the modal will be closed
+
  modalContainer.addEventListener("click", (e) => {
    if (e.target == modalContainer) {
      modalFunc("close");
    }
  });
  
- // Start Quiz Event Listener
+
  startQuizBtn.addEventListener("click", () => {
-   // Close the modal
+
    modalFunc("close");
  
-   // before question start, there will be a loading state, after the first question, the loading option will not be shown
+
    if (questionIndex === 0) {
      loadingContainer.style.display = "flex";
      document.body.style.overflow = "hidden";
@@ -505,35 +459,34 @@ function getRandomQuestions() {
        showQuestion();
      }, 2500);
    } else {
-     //   Show the question
+    
      showQuestion();
    }
  
-   // From the beginning the score will be 0
+   
    scoreElement.textContent = 0;
  });
  
- // Next Quiz Event listener
+
  nextQuiz.addEventListener("click", () => {
-   // Increasing the question index
+
    questionIndex++;
  
-   // if the question completed then the result will show
+ 
    if (questionIndex > quizArr.length - 1) {
      showResult();
    } else {
-     // Show the Question
+    
      showQuestion();
    }
  });
  
- // Restart Event functionality
+
  restart.addEventListener("click", () => {
-   // some initial task will show before shoing question
-   // like - removing the result section, and reset the time and score as well
+  
    initialShowQuestion();
  
-   // before question start, there will be a loading state, after the first question, the loading option will not be shown
+
    if (questionIndex === 0) {
      loadingContainer.style.display = "flex";
      document.body.style.overflow = "hidden";
@@ -542,14 +495,12 @@ function getRandomQuestions() {
        showQuestion();
      }, 2500);
    } else {
-     //   Show the question
+     
      showQuestion();
    }
  });
  
- // Back To Home Event listner
  backHome.addEventListener("click", () => {
-   // some initial task will show before shoing question
-   // like - removing the result section, and reset the time and score as well
+
    initialShowQuestion();
  });

@@ -6,52 +6,50 @@
     <title>Admin News Page</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="user_news.css">
+    <style>
+      
+    </style>
 </head>
 <body>
-    
     <header class="header">
         <nav class="nav">
             <div class="nav__bar">
                 <div class="logo">
                     <a href="#"><img src="assets/logo.png" alt="FIFA Logo"></a>
                 </div>
-                <div class="nav__menu__btn" id="menu-btn">
+                <div class="nav_menu_btn" id="menu-btn">
                     <i class="ri-menu-line"></i>
                 </div>
             </div>
             <ul class="nav__links" id="nav-links">
                 <li><a href="user.html">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#rules">Rules</a></li>
                 <li><a href="user_news.html">News</a></li>
                 <li><a href="Groupstage.html">Group Stage</a></li>
                 <li><a href="quiz.html">Quiz</a></li>
             </ul>
+            <a href="user_news.html" class="btn nav__btn">Get Ticket</a>
         </nav>
-        <div class="section__container header__container" id="home">
-        </div>
     </header>
-
     <div class="container">
-        <h1 class="mt-5">News List</h1>
         <div id="newsList" class="mt-3"></div>
     </div>
     <script src="config.js"></script>
     <script>
         window.onload = function() {
             fetch(`${BASE_URL}/news/`)
-    .then(response => response.json())
-    .then(data => {
+            .then(response => response.json())
+            .then(data => {
                 const newsContainer = document.getElementById('newsList');
                 if (data.data.results && Array.isArray(data.data.results)) {
                     const html = data.data.results.map(news => `
                         <div class="card mb-3">
                             <div class="card-body">
                                 <h5 class="card-title">${news.title}</h5>
-                                <img src="${news.image}" alt="News Image" style="width:900px; height:400px;">
-                                <p class="card-text">${news.content}</p>
+                                <div class="news-image-container">
+                                    <img src="${news.image}" alt="News Image" class="responsive-img">
+                                    <p class="card-text">${news.content}</p>
+                                </div>
                                 <p class="card-text"><small class="text-muted">Posted on ${new Date(news.date).toLocaleDateString()}</small></p>
-                                
                             </div>
                         </div>
                     `).join('');
@@ -65,8 +63,9 @@
                 document.getElementById('newsList').innerHTML = '<p>Error loading news.</p>';
             });
         };
-
-       
+        document.querySelector('.nav_menu_btn').addEventListener('click', function() {
+            document.querySelector('.nav__links').style.display = 'block';
+        });
     </script>
 </body>
 </html>

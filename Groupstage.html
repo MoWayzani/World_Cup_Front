@@ -5,73 +5,167 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teams List</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+   
     <link rel="stylesheet" href="Groupstage.css">
    
     
 </head>
 <body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav__bar">
+                <div class="logo">
+                    <a href="#"><img src="assets/logo.png" alt="FIFA Logo"></a>
+                </div>
+                <div class="nav__menu__btn" id="menu-btn">
+                    <i class="ri-menu-line"></i>
+                </div>
+            </div>
+            <ul class="nav__links" id="nav-links">
+                <li><a href="user.html">Home</a></li>
+                <li><a href="user_news.html">News</a></li>
+                <li><a href="Groupstage.html">Group Stage</a></li>
+                <li><a href="quiz.html">Quiz</a></li>
+            </ul>
+            <a href="user_news.html" class="btn nav__btn">Get Ticket</a>
+        </nav>
+        <div class="section__container header__container" id="home">
+        </div>
+    </header>
     <div class="container">
-        <a href="user.html" class="btn btn-primary ml-2 btn-back">Back</a>
+        <br>
 
-        <h1 class="mt-5">Group stage</h1>
+        <h1 class="mt-5">Teams</h1>
         <div id="teamsList" class="mt-3"></div>
-     
     </div>
+    
+    <footer class="footer" id="contact">
+        <div class="section__container footer__container">
+          <div class="footer__col">
+            <div class="logo">
+              <a href="#home"><img src="assets/logo.png" alt="logo" /></a>
+            </div>
+            <p class="section__description">
+              Undertake an unforgettable FIFA World Cup journey with us! Feel the excitement of the matches, soak up the lively atmosphere of host cities, and make memories that last a lifetime. Experience the best of football in style and comfort with our curated selection of World Cup experiences.
+            </p>
+            <button class="btn">Get Ticket</button>
+          </div>
+          <div class="footer__col">
+            <h4>FIFA World Cup Essentials</h4>
+            <ul class="footer__links">
+              <li><a href="#">Match Schedule & Fixtures</a></li>
+              <li><a href="#">Team Rankings & Standings</a></li>
+              
+              <li><a href="#">Stadium Information & Guidelines</a></li>
+             
+            </ul>
+          </div>
+          <div class="footer__col">
+            <h4>OUR SERVICES</h4>
+            <ul class="footer__links">
+              <li><a href="#">Matchday Assistance</a></li>
+              <li><a href="#">Ticketing Support</a></li>
+              <li><a href="#">Live Match Updates</a></li>
+              <li><a href="#">Accommodation Recommendations</a></li>
+            </ul>
+          </div>
+          <div class="footer__col">
+            <h4>MEDIA LINKS</h4>
+            <ul class="footer__links">
+              <li><a href="https://www.fifa.com/worldcup/">https://www.fifa.com/worldcup/</a></li>
+            </ul>
+            <div class="footer__socials">
+              <a href="https://www.facebook.com/fifaworldcup" target="_blank"><img src="assets/facebook.png" alt="facebook" /></a>
+              <a href=" https://www.instagram.com/fifaworldcup/" target="_blank"><img src="assets/instagram.png" alt="instagram" /></a>
+              <a href="https://www.youtube.com/user/FIFATV" target="_blank"><img src="assets/youtube.png" alt="youtube" /></a>
+              <a href="https://twitter.com/fifaworldcup" target="_blank"><img src="assets/twitter.png" alt="twitter" /></a>
+              
+            </div>
+              <br><br><br><br><br><br><br><br>
+    <div id="countdown">
+      <div id="years" class="time">
+          <span class="time-number" id="year">0</span>
+          <div class="time-label">Years</div>
+      </div>
+      <div id="days" class="time">
+          <span class="time-number" id="day">0</span>
+          <div class="time-label">Days</div>
+      </div>
+      <div id="hours" class="time">
+          <span class="time-number" id="hour">0</span>
+          <div class="time-label">Hours</div>
+      </div>
+      <div id="minutes" class="time">
+          <span class="time-number" id="minute">0</span>
+          <div class="time-label">Minutes</div>
+      </div>
+      <div id="seconds" class="time">
+          <span class="time-number" id="second">0</span>
+          <div class="time-label">Seconds</div>
+      </div>
+  </div>
+  
+          </div>
+          
+        </div>
+       
+      </footer>
     <script src="config.js"></script>
     <script>
- fetch(`${BASE_URL}/teams/list/`)
-    .then(response => response.json())
-    .then(data => {
-        const teamsContainer = document.getElementById('teamsList');
-        if (data && data.results && Array.isArray(data.results)) {
-            // Grouping teams by group_name
-            const groups = data.results.reduce((acc, team) => {
-                acc[team.group_name] = acc[team.group_name] || [];
-                acc[team.group_name].push(team);
-                return acc;
-            }, {});
-
-            // Sorting group keys
-            const sortedGroups = Object.keys(groups).sort((a, b) => a.localeCompare(b));
-
-            // Generating HTML for each group with sorted teams
-            const html = sortedGroups.map(group => `
-                <div class="group">
-                    <h3 class="group-title">${group}</h3>
-                    <div class="group-content">
-                        ${groups[group].sort((a, b) => b.points - a.points).map((team, index) => `
-                            <div class="card mb-3">
-                                <div class="card-body">
-                                    <div style="display: flex; align-items: center; justify-content: space-between;">
-                                        <img src="${team.logo}" alt="Team Logo" style="width: 100px; height: auto;">
-                                        <div style="font-size: 24px; font-weight: bold;" class="${index < 2 ? 'rank-highlight' : ''}">${index + 1}</div>
+        fetch(`${BASE_URL}/teams/list/`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const teamsContainer = document.getElementById('teamsList');
+                if (data && data.results && Array.isArray(data.results)) {
+                    const groups = data.results.reduce((acc, team) => {
+                        acc[team.group_name] = acc[team.group_name] || [];
+                        acc[team.group_name].push(team);
+                        return acc;
+                    }, {});
+        
+                    const sortedGroups = Object.keys(groups).sort((a, b) => a.localeCompare(b));
+        
+                    const html = sortedGroups.map(group => `
+                        <div class="group" >
+                            <h3 class="group-title">${group}</h3>
+                            <div class="group-content">
+                                ${groups[group].sort((a, b) => b.points - a.points).map((team, index) => `
+                                    <div class="card mb-3" style="background-color:rgba(255,255,255,0.7);">
+                                        <div class="card-body"  >
+                                            <div style="display: flex; align-items: center; justify-content: space-between; ">
+                                                <img src="${team.logo}" alt="Team Logo" style="width: 100px; height: auto;" >
+                                                <div style="font-size: 24px; font-weight: bold;" class="${index < 2 ? 'rank-highlight' : ''}">${index + 1}</div>
+                                            </div>
+                                            <h5 class="card-title">${team.name}</h5>
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item">Matches Played: ${team.matches_played}</li>
+                                                <li class="list-group-item">Wins: ${team.wins}</li>
+                                                <li class="list-group-item">Draws: ${team.draws}</li>
+                                                <li class="list-group-item">Losses: ${team.losses}</li>
+                                                <li class="list-group-item">Points: ${team.points}</li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                    <h5 class="card-title">${team.name}</h5>
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">Matches Played: ${team.matches_played}</li>
-                                        <li class="list-group-item">Wins: ${team.wins}</li>
-                                        <li class="list-group-item">Draws: ${team.draws}</li>
-                                        <li class="list-group-item">Losses: ${team.losses}</li>
-                                        <li class="list-group-item">Points: ${team.points}</li>
-                                    </ul>
-                                   
-                                </div>
+                                `).join('')}
                             </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `).join('');
-            teamsContainer.innerHTML = html;
-        } else {
-            teamsContainer.innerHTML = '<p>No teams found.</p>';
-        }
-    })
-    .catch(error => {
-        console.error('Error fetching teams:', error);
-        document.getElementById('teamsList').innerHTML = '<p>Error loading teams.</p>';
-    });
-
-</script>
+                        </div>
+                    `).join('');
+                    teamsContainer.innerHTML = html;
+                } else {
+                    teamsContainer.innerHTML = '<p>No teams found.</p>';
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching teams:', error);
+                document.getElementById('teamsList').innerHTML = `<p>Error loading teams: ${error.message}</p>`;
+            });
+    </script>
     
+       
 </body>
 </html>
