@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match Details</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="match_detail.css">
+</head>
+<body>
+    <div class="container mt-5" id="matchDetails">
+        <!-- Match details will be loaded here -->
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+         window.onload = function() {
+                const authToken = sessionStorage.getItem('authToken');
+                const isStaff = sessionStorage.getItem('isStaff') === 'true';
+    
+                if (!authToken || !isStaff) {
+                    window.location.href = 'login.html'; 
+                } else {
+        $(document).ready(function() {
+            const queryParams = new URLSearchParams(window.location.search);
+            const matchId = queryParams.get('match_id');
+    
+            $.getJSON(`${BASE_URL}/matches/${matchId}/`, function(match) {
+                const scoresText = match.is_played ? `Scores: ${match.team1_score} - ${match.team2_score}` : 'Scores: Not yet played';
+                const matchDetailsHtml = `
+                    <div class="card">
+                        <div class="card-header">
+                            Match Details
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title text-center">
+                                <img src="${match.team1.logo}" alt="${match.team1.name} Logo" style="height: 50px;">
+                                ${match.team1.name} vs ${match.team2.name}
+                                <img src="${match.team2.logo}" alt="${match.team2.name} Logo" style="height: 50px;">
+                            </h4>
+                            <p class="card-text">
+                                Date and Time: ${match.date}<br>
+                                Stadium: ${match.stadium.name}, ${match.stadium.location}<br>
+                                Match Type: ${match.type}<br>
+                                Prices: $${match.price1}, $${match.price2}, $${match.price3}<br>
+                                ${scoresText}
+                            </p>
+                        </div>
+                    </div>
+                `;
+                $('#matchDetails').html(matchDetailsHtml);
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                console.error("Error loading match details: " + textStatus + ", " + errorThrown);
+                $('#matchDetails').html('<p class="text-warning">Failed to load match details.</p>');
+            });
+        });
+    }
+}
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football Matches</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="list_matches.css">
+
+    <style>
+        .card-title img {
+            vertical-align: middle;  /* Aligns the logo vertically with the text */
+            margin-right: 1px;      /* Adds space between the logo and the text */
+        }
+    </style>
+
+
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-3">Upcoming Football Matches</h1>
+        <div id="matches" class="row">
+            <!-- Matches will be loaded here -->
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <script>
+         window.onload = function() {
+                const authToken = sessionStorage.getItem('authToken');
+                const isStaff = sessionStorage.getItem('isStaff') === 'true';
+    
+                if (!authToken || !isStaff) {
+                    window.location.href = 'login.html'; 
+                } else {
+        $(document).ready(function() {
+            // Fetch and display matches
+            $.getJSON(`${BASE_URL}/matches/`, function(data) {
+                let matchesHtml = data.results.map(match => `
+                    <div class="col-md-4 mb-4" id="match-${match.id}">
+                        <div class="card">
+                            <div class="card-header text-center">
+                                ${match.date}
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title text-center">
+                                    <img src="${match.team1.logo}" alt="${match.team1.name} Logo" style="height: 30px;"> 
+                                    ${match.team1.name} vs ${match.team2.name}
+                                    <img src="${match.team2.logo}" alt="${match.team2.name} Logo" style="height: 30px;">
+                                    ${match.is_played ? ` - Score: ${match.team1_score} : ${match.team2_score}` : ''}
+                                </h5>
+                                <div class="text-center mt-3">
+                                    <a href="match_detail.html?match_id=${match.id}" class="btn btn-primary">Details</a>
+                                    <a href="edit_match.html?match_id=${match.id}" class="btn btn-warning">Edit</a>
+                                    <button onclick="deleteMatch(${match.id})" class="btn btn-danger">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                $('#matches').html(matchesHtml);
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                console.error("Error loading data: " + textStatus + ", " + errorThrown);
+                $('#matches').html('<p class="text-warning">Failed to load matches.</p>');
+            });
+        
+            // Delete match function
+            window.deleteMatch = function(matchId) {
+                if (confirm('Are you sure you want to delete this match?')) {
+                    $.ajax({
+                        url: `${BASE_URL}/matches/${matchId}/delete/`,
+                        method: 'DELETE',
+                        success: function() {
+                            alert('Match deleted successfully!');
+                            $(`#match-${matchId}`).remove(); // Remove the match card from the page
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            alert('Failed to delete the match: ' + textStatus);
+                        }
+                    });
+                }
+            };
+        });
+    }
+}
+    </script>
+    
+    
+</body>
+</html>
+
+<script>
+    /*$(document).ready(function() {
+        $.getJSON('http://192.168.0.108:8000/api/matches/', function(data) {
+            let matchesHtml = data.results.map(match => `
+                <div class="col-md-4 mb-4">
+                    <a href="match_detail.html?match_id=${match.id}" class="text-decoration-none">
+                        <div class="card">
+                            <div class="card-header text-center">
+                                ${match.date}
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title text-center">
+                                    <img src="${match.team1.logo}" alt="${match.team1.name} Logo" style="height: 30px;"> 
+                                    ${match.team1.name} vs ${match.team2.name}
+                                    <img src="${match.team2.logo}" alt="${match.team2.name} Logo" style="height: 30px;">
+                                    ${match.is_played ? ` - Score: ${match.team1_score} : ${match.team2_score}` : ''}
+                                </h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            `).join('');
+            $('#matches').html(matchesHtml);
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            console.error("Error loading data: " + textStatus + ", " + errorThrown);
+            $('#matches').html('<p class="text-warning">Failed to load matches.</p>');
+        });
+    });*/
+</script>

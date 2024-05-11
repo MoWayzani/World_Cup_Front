@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Match</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="edit_match.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Edit Match</h1>
+        <form id="editMatchForm" class="mt-4">
+            <div class="form-group">
+                <label for="team1Name">Team 1</label>
+                <p id="team1Name" class="form-control-plaintext"></p>
+            </div>
+            <div class="form-group">
+                <label for="team2Name">Team 2</label>
+                <p id="team2Name" class="form-control-plaintext"></p>
+            </div>
+            <div class="form-group">
+                <label for="stadiumName">Stadium</label>
+                <p id="stadiumName" class="form-control-plaintext"></p>
+            </div>
+            <div class="form-group">
+                <label for="type">Match Type</label>
+                <select class="form-control" id="type" required>
+                    <option value="Group Stage">Group Stage</option>
+                    <option value="Round of 32">Round of 32</option>
+                    <option value="Round of 16">Round of 16</option>
+                    <option value="Quarter Final">Quarter Final</option>
+                    <option value="Semi Final">Semi Final</option>
+                    <option value="Final">Final</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="matchDate">Match Date</label>
+                <input type="datetime-local" class="form-control" id="matchDate" required>
+            </div>
+            <div class="form-group">
+                <label for="price1">Price 1</label>
+                <input type="number" class="form-control" id="price1" required>
+            </div>
+            <div class="form-group">
+                <label for="price2">Price 2</label>
+                <input type="number" class="form-control" id="price2" required>
+            </div>
+            <div class="form-group">
+                <label for="price3">Price 3</label>
+                <input type="number" class="form-control" id="price3" required>
+            </div>
+            <div class="form-group">
+                <label for="team1Score">Team 1 Score</label>
+                <input type="number" class="form-control" id="team1Score" required>
+            </div>
+            <div class="form-group">
+                <label for="team2Score">Team 2 Score</label>
+                <input type="number" class="form-control" id="team2Score" required>
+            </div>
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="isPlayed">
+                <label class="form-check-label" for="isPlayed">Is Played?</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Update Match</button>
+            <a href="admin.html" class="btn btn-primary ml-2">Back</a>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+          window.onload = function() {
+                const authToken = sessionStorage.getItem('authToken');
+                const isStaff = sessionStorage.getItem('isStaff') === 'true';
+    
+                if (!authToken || !isStaff) {
+                    window.location.href = 'login.html'; 
+                } else {
+       document.getElementById('editMatchForm').onsubmit = function(event) {
+    event.preventDefault();
+    const formData = {
+        type: document.getElementById('type').value,
+        date: document.getElementById('matchDate').value,
+        price1: parseFloat(document.getElementById('price1').value),
+        price2: parseFloat(document.getElementById('price2').value),
+        price3: parseFloat(document.getElementById('price3').value),
+        team1_score: parseInt(document.getElementById('team1Score').value, 10),
+        team2_score: parseInt(document.getElementById('team2Score').value, 10),
+        is_played: document.getElementById('isPlayed').checked
+    };
+
+    const queryParams = new URLSearchParams(window.location.search);
+    const matchId = queryParams.get('match_id');
+
+    fetch(`${BASE_URL}/matches/${matchId}/update/`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(err => {throw err});
+        }
+        return response.json();
+    })
+    .then(data => {
+        alert('Match updated successfully!');
+        window.location.href = 'list_matches.html'; // Redirect back to match list or detail page
+    })
+    .catch(error => {
+        console.error('Error updating match:', error);
+        alert('Error updating the match: ' + (error.message || 'Unknown error'));
+    });
+};
+
+}
+        function loadInitialData() {
+            const queryParams = new URLSearchParams(window.location.search);
+            const matchId = queryParams.get('match_id');
+    
+            // Load match details and fill the form
+            fetch(`${BASE_URL}/matches/${matchId}/`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('team1Name').textContent = data.team1.name;
+                document.getElementById('team2Name').textContent = data.team2.name;
+                document.getElementById('stadiumName').textContent = data.stadium.name;
+                document.getElementById('type').value = data.type;
+                document.getElementById('matchDate').value = data.date.substring(0, 16); // adjust for datetime-local input format
+                document.getElementById('price1').value = data.price1;
+                document.getElementById('price2').value = data.price2;
+                document.getElementById('price3').value = data.price3;
+                document.getElementById('team1Score').value = data.team1_score;
+                document.getElementById('team2Score').value = data.team2_score;
+                document.getElementById('isPlayed').checked = data.is_played;
+            })
+            .catch(error => console.error('Error loading match data:', error));
+    
+            // Load teams and stadiums, then set the selected options
+        }
+    
+        function loadTeams() {
+            return fetch(`${BASE_URL}/teams/list/`)
+            .then(response => response.json())
+            .then(data => {
+                let options = data.results.map(team => `<option value="${team.id}">${team.name}</option>`).join('');
+                document.getElementById('team1').innerHTML = options;
+                document.getElementById('team2').innerHTML = options;
+            });
+        }
+    
+        function loadStadiums() {
+            return fetch(`${BASE_URL}/stadiums/`)
+            .then(response => response.json())
+            .then(data => {
+                let options = data.results.map(stadium => `<option value="${stadium.id}">${stadium.name}</option>`).join('');
+                document.getElementById('stadium').innerHTML = options;
+            });
+        }
+    
+        loadInitialData();
+      }  // Load existing match data and initialize form
+    </script>
+    
+</body>
+</html>
