@@ -1,2 +1,2 @@
 // config.js
-var BASE_URL = 'http://192.168.1.11:8000/api';
+var BASE_URL = 'http://192.168.1.9:8000/api';

@@ -8,6 +8,27 @@
     <link rel="stylesheet" href="match_detail.css">
 </head>
 <body>
+    
+    <header class="header">
+        <nav class="nav">
+            <div class="nav__bar">
+                <div class="logo">
+                    <a href="#"><img src="assets/logo.png" alt="FIFA Logo"></a>
+                </div>
+                <div class="nav_menu_btn" id="menu-btn">
+                    <i class="ri-menu-line"></i>
+                </div>
+            </div>
+            <ul class="nav__links" id="nav-links">
+                <li><a href="user.html">Home</a></li>
+                <li><a href="user_news.html">News</a></li>
+                <li><a href="Groupstage.html">Group Stage</a></li>
+                <li><a href="userlistmatch.html">Matches</a></li>
+                <li><a href="quiz.html">Quiz</a></li>
+            </ul>
+            <a href="user_news.html" class="btn nav__btn">Get Ticket</a>
+        </nav>
+    </header>
     <div class="container mt-5" id="matchDetails">
         <!-- Match details will be loaded here -->
     </div>
@@ -15,13 +36,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="config.js"></script>
     <script>
-         window.onload = function() {
-                const authToken = sessionStorage.getItem('authToken');
-                const isStaff = sessionStorage.getItem('isStaff') === 'true';
-    
-                if (!authToken || !isStaff) {
-                    window.location.href = 'login.html'; 
-                } else {
+        
         $(document).ready(function() {
             const queryParams = new URLSearchParams(window.location.search);
             const matchId = queryParams.get('match_id');
@@ -43,7 +58,7 @@
                                 Date and Time: ${match.date}<br>
                                 Stadium: ${match.stadium.name}, ${match.stadium.location}<br>
                                 Match Type: ${match.type}<br>
-                                Prices: $${match.price1}, $${match.price2}, $${match.price3}<br>
+                               
                                 ${scoresText}
                             </p>
                         </div>
@@ -55,8 +70,6 @@
                 $('#matchDetails').html('<p class="text-warning">Failed to load match details.</p>');
             });
         });
-    }
-}
     </script>
     
 </body>

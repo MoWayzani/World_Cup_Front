@@ -25,3 +25,107 @@ body {
     background-color: #0056b3;
     border-color: #0056b3;
 }
+
+.card {
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  .card-title {
+  font-weight: bold;
+  font-size: 24px;
+  color: #0056b3; /* Blue color for titles */
+  text-align: center; /* Centers the title text within its container */
+  }
+  
+  .card-body {
+    padding: 20px;
+  }
+  .news-image-container {
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    margin: auto;
+    padding: 20px;
+    width: fit-content;
+    border-radius: 10px;
+  }
+  .responsive-img {
+    width: 600px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 20px; /* Increased space between the image and text */
+  }
+  .card-text {
+  font-size: 18px;
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  margin-top: 20px; /* Additional space above the text */
+  text-align: left; /* Ensures text aligns to the left */
+  }
+  
+  .header .nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    padding: 0 20px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    height: 60px;
+  }
+  body {
+    padding-top: 60px;
+  }
+  .nav__bar .logo img {
+    height: 50px;
+  }
+  .nav__links {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    align-items: center;
+    margin: 0 auto;
+  }
+  .nav__links li a {
+    display: block;
+    padding: 10px 15px;
+    color: white;
+    text-decoration: none;
+  }
+  .nav__btn {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  .nav__btn:hover {
+    background-color: darkred;
+  }
+  .nav_menu_btn {
+    display: none;
+    cursor: pointer;
+  }
+  @media (max-width: 768px) {
+    .header .nav {
+        justify-content: flex-start;
+    }
+    .nav__links {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+    .nav__links li a {
+        padding: 10px 8px;
+    }
+    .nav_menu_btn {
+        display: block;
+        margin-right: 10px;
+    }
+    .nav__btn {
+        padding: 10px 15px;
+    }
+  }
