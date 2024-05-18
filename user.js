@@ -115,5 +115,8 @@ function countDown () {
     setCountDown('minutes', diffMinute(diff))
     setCountDown('seconds', diffSecond(diff))
 }
+document.getElementById('menu-btn').addEventListener('click', function() {
+  document.getElementById('nav-links').classList.toggle('open');
+});
 
 window.load = setInterval(countDown, 1000)

@@ -4,15 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container">
         <h1 class="mt-5">Dashboard</h1>
         <p>Welcome, <span id="userName">Loading...</span>!</p>
         <button onclick="logout()" class="btn btn-danger">Logout</button>
+
+        <!-- Section to display matches -->
+        <h2 class="mb-3">Upcoming Football Matches</h2>
+        <div id="matches" class="row">
+            <!-- Matches will be loaded here -->
+        </div>
+
+        <!-- Section to display user reservations -->
+        <h2 class="mb-3">Your Reservations</h2>
+        <div id="reservations" class="row">
+            <!-- Reservations will be loaded here -->
+        </div>
     </div>
-    <script src="config.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         window.onload = function() {
             const authToken = sessionStorage.getItem('authToken');
@@ -34,6 +47,67 @@
                     console.error('Error fetching user details:', error);
                     alert('Error fetching user details. Please log in again.');
                     logout();
+                });
+
+                // Fetch and display matches
+                $.getJSON(`${BASE_URL}/matches/`, function(data) {
+                    let matchesHtml = data.results.filter(match => !match.is_played).map(match => `
+                        <div class="col-md-4 mb-4">
+                            <a href="reservation.html?match_id=${match.id}" class="card-link">
+                                <div class="card">
+                                    <div class="card-header text-center">
+                                        ${match.date}
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title text-center">
+                                            <img src="${match.team1.logo}" alt="${match.team1.name} Logo" style="height: 20px;"> 
+                                            ${match.team1.name} vs ${match.team2.name}
+                                            <img src="${match.team2.logo}" alt="${match.team2.name} Logo" style="height: 20px;">
+                                        </h5>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    `).join('');
+                    $('#matches').html(matchesHtml);
+                });
+
+                // Fetch and display user reservations
+                fetch(`${BASE_URL}/user-reservations/`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Token ' + authToken,
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Reservations data:', data);  // Log the data to check its structure
+                    let reservations = data.results || data;
+                    if (Array.isArray(reservations)) {
+                        let reservationsHtml = reservations.map(reservation => `
+                            <div class="col-md-4 mb-4">
+                                <div class="card">
+                                    <div class="card-header">
+                                        ${reservation.match.team1.name} vs ${reservation.match.team2.name}
+                                    </div>
+                                    <div class="card-body">
+                                        <p><strong>Seat:</strong> ${reservation.seat_number}</p>
+                                        <p><strong>Price:</strong> $${reservation.price}</p>
+                                        <p><strong>Reserved on:</strong> ${new Date(reservation.date).toLocaleDateString()}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('');
+                        $('#reservations').html(reservationsHtml);
+                    } else {
+                        console.error('Unexpected response format:', data);
+                        alert('Error fetching reservations.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching reservations:', error);
+                    alert('Error fetching reservations.');
                 });
             }
         };

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match Reservation</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5" id="matchDetails">
+        <!-- Match details and reservation options will be loaded here -->
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            const queryParams = new URLSearchParams(window.location.search);
+            const matchId = queryParams.get('match_id');
+        
+            // Fetch match details
+            $.getJSON(`${BASE_URL}/matches/${matchId}/`, function(match) {
+                $('#matchDetails').html(`
+                    <div class="card">
+                        <div class="card-header">Match Details</div>
+                        <div class="card-body">
+                            <h4 class="card-title text-center">
+                                <img src="${match.team1.logo}" alt="${match.team1.name} Logo" style="height: 50px;">
+                                ${match.team1.name} vs ${match.team2.name}
+                                <img src="${match.team2.logo}" alt="${match.team2.name} Logo" style="height: 50px;">
+                            </h4>
+                            <p class="card-text">
+                                Date and Time: ${match.date}<br>
+                                Stadium: ${match.stadium.name}, ${match.stadium.location}<br>
+                                Match Type: ${match.type}<br>
+                                Prices: $${match.price1}, $${match.price2}, $${match.price3}
+                            </p>
+                            <div id="seatSelection"></div>
+                            <button id="confirmReservation" class="btn btn-success mt-3">Confirm Reservation</button>
+                        </div>
+                    </div>
+                `);
+                fetchReservedSeats(matchId, match.stadium.seats, match.price1, match.price2, match.price3);
+            });
+        
+            function fetchReservedSeats(matchId, totalSeats, price1, price2, price3) {
+                $.getJSON(`${BASE_URL}/reserved-seats/${matchId}/`, function(reservedSeats) {
+                    let reservedSeatNumbers = reservedSeats.map(seat => seat.seat_number);
+                    generateSeatButtons(totalSeats, price1, price2, price3, reservedSeatNumbers);
+                });
+            }
+        
+            function generateSeatButtons(totalSeats, price1, price2, price3, reservedSeats) {
+                const seatDiv = $('#seatSelection');
+                appendSeats(seatDiv, 1, Math.floor(totalSeats * 0.50), price1, "price1Seats", reservedSeats);
+                appendSeats(seatDiv, Math.floor(totalSeats * 0.50) + 1, Math.floor(totalSeats * 0.80), price2, "price2Seats", reservedSeats);
+                appendSeats(seatDiv, Math.floor(totalSeats * 0.80) + 1, totalSeats, price3, "price3Seats", reservedSeats);
+            }
+        
+            function appendSeats(div, start, end, price, className, reservedSeats) {
+                for (let i = start; i <= end; i++) {
+                    const isReserved = reservedSeats.includes(i.toString());
+                    const buttonClass = isReserved ? 'btn-danger' : 'btn-secondary';
+                    div.append(`<button class="btn ${buttonClass} m-1 seat-button ${className}" data-price="${price}" data-seat-number="${i}" ${isReserved ? 'disabled' : ''}>Seat ${i} - $${price}</button>`);
+                }
+            }
+        
+            $(document).on('click', '.seat-button', function() {
+                if (!$(this).is('[disabled]')) {
+                    $('.seat-button').removeClass('btn-success').addClass('btn-secondary'); // Reset other buttons
+                    $(this).addClass('btn-success').removeClass('btn-secondary');
+                    selectedSeats = [{seatNumber: $(this).data('seat-number'), price: $(this).data('price')}];
+                }
+            });
+        
+            $(document).on('click', '#confirmReservation', function() {
+                if (selectedSeats.length === 0) {
+                    alert('No seats selected');
+                    return;
+                }
+                selectedSeats.forEach(seat => {
+                    const postData = {
+                        match: matchId,
+                        seat_number: seat.seatNumber,
+                        price: seat.price
+                    };
+                    $.ajax({
+                        url: `${BASE_URL}/reservations/`,
+                        method: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify(postData),
+                        headers: {
+                            'Authorization': 'Token ' + sessionStorage.getItem('authToken')
+                        },
+                        success: function(response) {
+                            alert('Reservation confirmed!');
+                            $(`[data-seat-number="${seat.seatNumber}"]`).addClass('btn-danger').removeClass('btn-success').prop('disabled', true);
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            alert('Error making reservation. ' + errorThrown);
+                        }
+                    });
+                });
+            });
+        });
+        </script>
+    
+</body>
+</html>
