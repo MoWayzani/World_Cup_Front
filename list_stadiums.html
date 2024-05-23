@@ -4,50 +4,104 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>List of Stadiums</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #f4f4f4; /* Light grey background for contrast */
-        }
-        .container {
-            background: #ffffff; /* White background for the content area */
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow for depth */
-            margin-top: 40px; /* Space at the top */
-            max-width: 960px; /* Limiting max width for better layout on larger screens */
-        }
-        .card {
-            margin-bottom: 20px; /* Space between cards */
-        }
-        .card-body {
-            position: relative; /* Positioning context for absolute positioning */
-        }
-        .btn-danger {
-            position: absolute; /* Button positioned at bottom right of the card */
-            right: 20px; /* 20px from the right */
-            bottom: 20px; /* 20px from the bottom */
-        }
-        .card-title {
-            color: #007bff; /* Bootstrap primary blue for the title for consistency */
-        }
-        .card-subtitle {
-            color: #6c757d; /* Bootstrap's subtitle color for consistency */
-        }
-        @media (max-width: 768px) {
-            .btn-danger {
-                position: static; /* On small screens, use normal flow instead */
-                margin-top: 10px; /* Space above button when in normal flow */
-            }
-        }
-    </style>
-    
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="list_stadiums.css">
 </head>
 <body>
-    <div class="container">
-        <h1 class="mt-5">Stadiums</h1>
-        <a href="admin.html" class="btn btn-primary ml-2 btn-back">Back</a>
+    <div class="wrapper">
+        <!--header menu start-->
+        <div class="header">
+            <div class="header-menu">
+                <div class="title">World <span>Cup</span></div>
+                <div class="sidebar-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <ul>
+                      <center class="profile">
+                    
+                    <p> <span id="userName">Loading...</span></p>
+                </center>
+                    <li><a href="#"><i class="fas fa-power-off" onclick="logout()" class="btn btn-danger"></i></a></li>
+                </ul>
+            </div>
+        </div>
+        <!--header menu end-->
+        <!--sidebar start-->
+        <div class="sidebar">
+            <div class="sidebar-menu">
+              
+                <li class="item">
+                    <a href="admin.html" class="menu-btn">
+                        <i class="fas fa-desktop"></i><span>Dashboard</span>
+                        
+                    </a>
+                </li>
+
+                <li class="item">
+                    <a href="adminuser.html" class="menu-btn">
+                        <i class="fas fa-desktop"></i><span>Manage User</span>
+                        
+                    </a>
+                </li>
+
+              
+                
+                <li class="item" id="profile">
+                    <a href="#profile" class="menu-btn">
+                        <i class="fas fa-user-circle"></i><span>News <i class="fas fa-chevron-down drop-down"></i></span>
+                    </a>
+                    <div class="sub-menu">
+                        <a href="add_news.html"><i class="fas fa-image"></i><span>Add News</span></a>
+                        <a href="admin_news.html"><i class="fas fa-address-card"></i><span>View News</span></a>
+                    </div>
+                </li>
+                <li class="item" id="messages">
+                    <a href="#messages" class="menu-btn">
+                        <i class="fas fa-envelope"></i><span>Teams <i class="fas fa-chevron-down drop-down"></i></span>
+                    </a>
+                    <div class="sub-menu">
+                        <a href="add_team.html"><i class="fas fa-envelope"></i><span>Add Teams</span></a>
+                        <a href="display_teams.html"><i class="fas fa-envelope-square"></i><span>Display Teams</span></a>
+                       
+                    </div>
+                </li>
+                <li class="item" id="settings">
+                    <a href="#settings" class="menu-btn">
+                        <i class="fas fa-cog"></i><span>Stadiums <i class="fas fa-chevron-down drop-down"></i></span>
+                    </a>
+                    <div class="sub-menu">
+                        <a href="add_stadium.html"><i class="fas fa-lock"></i><span>Add Stadium</span></a>
+                        <a href="list_stadiums.html"><i class="fas fa-language"></i><span>List Stadium</span></a>
+                    </div>
+                </li>
+                <li class="item" id="matches">
+                    <a href="#matches" class="menu-btn">
+                        <i class="fas fa-cog"></i><span>Matches <i class="fas fa-chevron-down drop-down"></i></span>
+                    </a>
+                    <div class="sub-menu">
+                        <a href="create_match.html"><i class="fas fa-lock"></i><span>Create Match</span></a>
+                        <a href="list_matches.html"><i class="fas fa-language"></i><span>List Match</span></a>
+                    </div>
+                    
+                </li> 
+                <li class="item">
+                    
+                    <a href="list_reservations.html" class="menu-btn">
+                        <i class="fas fa-desktop"></i><span>Reservations</span>
+                        
+                    </a>
+                </li>
+            </div>
+        </div>
+        <!--sidebar end-->
+        <!--main container start-->
+        <div class="main-container">
+            <h1 class="mt-5">Stadiums</h1>
+        
         <div id="stadiumsList" class="mt-3"></div>
+        </div>
+        <!--main container end-->
     </div>
     
     <script src="config.js"></script>

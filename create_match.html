@@ -5,55 +5,146 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Match</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="create_match.css">
+    <link rel="stylesheet" href="create_match.css">  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
 </head>
 <body>
-    <div class="container">
-        <h1 class="mt-5">Create a New Match</h1>
-        <form id="createMatchForm" class="mt-4">
-            <div class="form-group">
-                <label for="team1">Team 1</label>
-                <select class="form-control" id="team1" required></select>
+    <div class="wrapper">
+        <!--header menu start-->
+        <div class="header">
+            <div class="header-menu">
+                <div class="title">World <span>Cup</span></div>
+                <div class="sidebar-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <ul>
+                      <center class="profile">
+                    
+                    <p> <span id="userName">Loading...</span></p>
+                </center>
+                    <li><a href="#"><i class="fas fa-power-off" onclick="logout()" class="btn btn-danger"></i></a></li>
+                </ul>
             </div>
-            <div class="form-group">
-                <label for="team2">Team 2</label>
-                <select class="form-control" id="team2" required></select>
+        </div>
+        <!--header menu end-->
+        <!--sidebar start-->
+        <div class="sidebar">
+            <div class="sidebar-menu">
+              
+                <li class="item">
+                    <a href="admin.html" class="menu-btn">
+                        <i class="fas fa-desktop"></i><span>Dashboard</span>
+                        
+                    </a>
+                </li>
+
+                <li class="item">
+                    <a href="adminuser.html" class="menu-btn">
+                        <i class="fas fa-desktop"></i><span>Manage User</span>
+                        
+                    </a>
+                </li>
+
+              
+                
+                <li class="item" id="profile">
+                    <a href="#profile" class="menu-btn">
+                        <i class="fas fa-user-circle"></i><span>News <i class="fas fa-chevron-down drop-down"></i></span>
+                    </a>
+                    <div class="sub-menu">
+                        <a href="add_news.html"><i class="fas fa-image"></i><span>Add News</span></a>
+                        <a href="admin_news.html"><i class="fas fa-address-card"></i><span>View News</span></a>
+                    </div>
+                </li>
+                <li class="item" id="messages">
+                    <a href="#messages" class="menu-btn">
+                        <i class="fas fa-envelope"></i><span>Teams <i class="fas fa-chevron-down drop-down"></i></span>
+                    </a>
+                    <div class="sub-menu">
+                        <a href="add_team.html"><i class="fas fa-envelope"></i><span>Add Teams</span></a>
+                        <a href="display_teams.html"><i class="fas fa-envelope-square"></i><span>Display Teams</span></a>
+                       
+                    </div>
+                </li>
+                <li class="item" id="settings">
+                    <a href="#settings" class="menu-btn">
+                        <i class="fas fa-cog"></i><span>Stadiums <i class="fas fa-chevron-down drop-down"></i></span>
+                    </a>
+                    <div class="sub-menu">
+                        <a href="add_stadium.html"><i class="fas fa-lock"></i><span>Add Stadium</span></a>
+                        <a href="list_stadiums.html"><i class="fas fa-language"></i><span>List Stadium</span></a>
+                    </div>
+                </li>
+                <li class="item" id="matches">
+                    <a href="#matches" class="menu-btn">
+                        <i class="fas fa-cog"></i><span>Matches <i class="fas fa-chevron-down drop-down"></i></span>
+                    </a>
+                    <div class="sub-menu">
+                        <a href="create_match.html"><i class="fas fa-lock"></i><span>Create Match</span></a>
+                        <a href="list_matches.html"><i class="fas fa-language"></i><span>List Match</span></a>
+                    </div>
+                    
+                </li> 
+                <li class="item">
+                    
+                    <a href="list_reservations.html" class="menu-btn">
+                        <i class="fas fa-desktop"></i><span>Reservations</span>
+                        
+                    </a>
+                </li>
             </div>
-            <div class="form-group">
-                <label for="stadium">Stadium</label>
-                <select class="form-control" id="stadium" required></select>
-            </div>
-            <div class="form-group">
-                <label for="type">Match Type</label>
-                <select class="form-control" id="type" required>
-                    <option value="Group Stage">Group Stage</option>
-                    <option value="Round of 16">Round of 32</option>
-                    <option value="Round of 16">Round of 16</option>
-                    <option value="Quarter Final">Quarter Final</option>
-                    <option value="Semi Final">Semi Final</option>
-                    <option value="Final">Final</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="matchDate">Match Date</label>
-                <input type="datetime-local" class="form-control" id="matchDate" required>
-            </div>
-            <div class="form-group">
-                <label for="price1">Price 1</label>
-                <input type="number" class="form-control" id="price1" required>
-            </div>
-            <div class="form-group">
-                <label for="price2">Price 2</label>
-                <input type="number" class="form-control" id="price2" required>
-            </div>
-            <div class="form-group">
-                <label for="price3">Price 3</label>
-                <input type="number" class="form-control" id="price3" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Create Match</button>
-            <a href="admin.html" class="btn btn-primary ml-2">Back</a>
-        </form>
+        </div>
+        <!--sidebar end-->
+        <!--main container start-->
+        <div class="main-container">
+            <h1 class="mt-5">Create a New Match</h1>
+            <form id="createMatchForm" class="mt-4">
+                <div class="form-group">
+                    <label for="team1">Team 1</label>
+                    <select class="form-control" id="team1" required></select>
+                </div>
+                <div class="form-group">
+                    <label for="team2">Team 2</label>
+                    <select class="form-control" id="team2" required></select>
+                </div>
+                <div class="form-group">
+                    <label for="stadium">Stadium</label>
+                    <select class="form-control" id="stadium" required></select>
+                </div>
+                <div class="form-group">
+                    <label for="type">Match Type</label>
+                    <select class="form-control" id="type" required>
+                        <option value="Group Stage">Group Stage</option>
+                        <option value="Round of 16">Round of 32</option>
+                        <option value="Round of 16">Round of 16</option>
+                        <option value="Quarter Final">Quarter Final</option>
+                        <option value="Semi Final">Semi Final</option>
+                        <option value="Final">Final</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="matchDate">Match Date</label>
+                    <input type="datetime-local" class="form-control" id="matchDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="price1">Price 1</label>
+                    <input type="number" class="form-control" id="price1" required>
+                </div>
+                <div class="form-group">
+                    <label for="price2">Price 2</label>
+                    <input type="number" class="form-control" id="price2" required>
+                </div>
+                <div class="form-group">
+                    <label for="price3">Price 3</label>
+                    <input type="number" class="form-control" id="price3" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Create Match</button>
+             
+            </form>
+        </div>
+        <!--main container end-->
     </div>
+   
     <script src="config.js"></script>
     <script>
         document.getElementById('createMatchForm').onsubmit = function(event) {

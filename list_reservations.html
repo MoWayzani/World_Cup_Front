@@ -5,51 +5,199 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reservations</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="list_reservations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
 </head>
 <body>
-    <div class="container">
-        <h1 class="my-4">Reservations</h1>
-        <div id="reservations-container" class="list-group">
-            <!-- Reservations will be inserted here by JavaScript -->
+    <div class="wrapper">
+        <!--header menu start-->
+        <div class="header">
+            <div class="header-menu">
+                <div class="title">World <span>Cup</span></div>
+                <div class="sidebar-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <ul>
+                      <center class="profile">
+                    
+                    <p> <span id="userName">Loading...</span></p>
+                </center>
+                    <li><a href="#"><i class="fas fa-power-off" onclick="logout()" class="btn btn-danger"></i></a></li>
+                </ul>
+            </div>
         </div>
-    </div>
+        <!--header menu end-->
+        <!--sidebar start-->
+        <div class="sidebar">
+            <div class="sidebar-menu">
+              
+                <li class="item">
+                    <a href="admin.html" class="menu-btn">
+                        <i class="fas fa-desktop"></i><span>Dashboard</span>
+                        
+                    </a>
+                </li>
 
+                <li class="item">
+                    <a href="adminuser.html" class="menu-btn">
+                        <i class="fas fa-desktop"></i><span>Manage User</span>
+                        
+                    </a>
+                </li>
+
+              
+                
+                <li class="item" id="profile">
+                    <a href="#profile" class="menu-btn">
+                        <i class="fas fa-user-circle"></i><span>News <i class="fas fa-chevron-down drop-down"></i></span>
+                    </a>
+                    <div class="sub-menu">
+                        <a href="add_news.html"><i class="fas fa-image"></i><span>Add News</span></a>
+                        <a href="admin_news.html"><i class="fas fa-address-card"></i><span>View News</span></a>
+                    </div>
+                </li>
+                <li class="item" id="messages">
+                    <a href="#messages" class="menu-btn">
+                        <i class="fas fa-envelope"></i><span>Teams <i class="fas fa-chevron-down drop-down"></i></span>
+                    </a>
+                    <div class="sub-menu">
+                        <a href="add_team.html"><i class="fas fa-envelope"></i><span>Add Teams</span></a>
+                        <a href="display_teams.html"><i class="fas fa-envelope-square"></i><span>Display Teams</span></a>
+                       
+                    </div>
+                </li>
+                <li class="item" id="settings">
+                    <a href="#settings" class="menu-btn">
+                        <i class="fas fa-cog"></i><span>Stadiums <i class="fas fa-chevron-down drop-down"></i></span>
+                    </a>
+                    <div class="sub-menu">
+                        <a href="add_stadium.html"><i class="fas fa-lock"></i><span>Add Stadium</span></a>
+                        <a href="list_stadiums.html"><i class="fas fa-language"></i><span>List Stadium</span></a>
+                    </div>
+                </li>
+                <li class="item" id="matches">
+                    <a href="#matches" class="menu-btn">
+                        <i class="fas fa-cog"></i><span>Matches <i class="fas fa-chevron-down drop-down"></i></span>
+                    </a>
+                    <div class="sub-menu">
+                        <a href="create_match.html"><i class="fas fa-lock"></i><span>Create Match</span></a>
+                        <a href="list_matches.html"><i class="fas fa-language"></i><span>List Match</span></a>
+                    </div>
+                    
+                </li> 
+                <li class="item">
+                    
+                    <a href="list_reservations.html" class="menu-btn">
+                        <i class="fas fa-desktop"></i><span>Reservations</span>
+                        
+                    </a>
+                </li>
+            </div>
+        </div>
+        <!--sidebar end-->
+        <!--main container start-->
+        <div class="main-container">
+           
+            
+            
+                
+                <div class="sort-options">
+                    <label for="sortMatches">Sort by:</label>
+                    <select id="sortMatches" onchange="sortReservations()">
+                        <option value="date">Date</option>
+                        <option value="match">Match</option>
+                    </select>
+                </div>
+                <div id="reservations-container" class="user-table"></div>
+            
+           
+        </div>
+        <!--main container end-->
+    </div>
+   
+    <script src="config.js"></script>
     <script>
-           window.onload = function() {
+             window.onload = function() {
                 const authToken = sessionStorage.getItem('authToken');
                 const isStaff = sessionStorage.getItem('isStaff') === 'true';
     
                 if (!authToken || !isStaff) {
-                    window.location.href = 'login.html'; 
+                    window.location.href = 'login.html'; // Ensure only admins can access the admin dashboard
                 } else {
+                    require('dotenv').config(); 
+                    fetch(`${BASE_URL}/login/`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': 'Token ' + authToken,
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('userName').textContent = data.first_name + ' ' + data.last_name;
+                    })
+                    .catch(error => {
+                        console.error('Error fetching user details:', error);
+                        alert('Error fetching user details. Please log in again.');
+                        logout();
+                    });
+                }
+            };
+        let reservationsData = []; // Store reservations globally
+    
         document.addEventListener('DOMContentLoaded', function() {
             fetch(`${BASE_URL}/reservationslist/`)
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data); // Log the response data to check its structure
-                    const container = document.getElementById('reservations-container');
-                    if (data.results && Array.isArray(data.results)) {
-                        data.results.forEach(reservation => {
-                            const item = document.createElement('div');
-                            item.classList.add('list-group-item', 'mb-2');
-                            item.innerHTML = `
-                                <h5 class="mb-1">${reservation.user.first_name} ${reservation.user.last_name} (${reservation.user.username})</h5>
-                                <p class="mb-1">Match: ${reservation.match.team1.name} vs ${reservation.match.team2.name}</p>
-                                <p class="mb-1">Date: ${new Date(reservation.match.date).toLocaleString()}</p>
-                                <p class="mb-1">Seat: ${reservation.seat_number}</p>
-                                <p class="mb-1">Price: $${reservation.price}</p>
-                                <p class="mb-1">Reserved on: ${new Date(reservation.date).toLocaleString()}</p>
-                            `;
-                            container.appendChild(item);
-                        });
-                    } else {
-                        console.error('Unexpected response format:', data);
-                    }
+                    
+                    reservationsData = data.results; // Store the fetched data
+                    renderReservations(reservationsData); // Initial render
                 })
                 .catch(error => console.error('Error fetching reservations:', error));
         });
-    }
-}
+    
+        function renderReservations(data) {
+            const container = document.getElementById('reservations-container');
+            container.innerHTML = ''; // Clear previous entries
+            if (data && Array.isArray(data)) {
+                data.forEach(reservation => {
+                    const item = document.createElement('div');
+                    item.classList.add('list-group-item', 'mb-2');
+                    item.innerHTML = `
+                        <h5 class="mb-1">${reservation.user.first_name} ${reservation.user.last_name} (${reservation.user.username})</h5>
+                        <p class="mb-1">Match: ${reservation.match.team1.name} vs ${reservation.match.team2.name}</p>
+                        <p class="mb-1">Seat: ${reservation.seat_number}</p>
+                        <p class="mb-1">Price: $${reservation.price}</p>
+                        <p class="mb-1">Reserved on: ${new Date(reservation.date).toLocaleString()}</p>
+                    `;
+                    container.appendChild(item);
+                });
+            } else {
+                console.error('Unexpected response format:', data);
+            }
+        }
+        function logout() {
+                sessionStorage.removeItem('authToken');
+                sessionStorage.removeItem('isStaff');
+                window.location.href = 'login.html'; // Redirect to login on logout
+            }
+        function sortReservations() {
+            const sortOption = document.getElementById('sortMatches').value;
+            if (sortOption === 'match') {
+                reservationsData.sort((a, b) => (a.match.team1.name + a.match.team2.name).localeCompare(b.match.team1.name + b.match.team2.name));
+            } else if (sortOption === 'date') {
+                reservationsData.sort((a, b) => new Date(a.date) - new Date(b.date));
+            }
+            renderReservations(reservationsData);
+        }
     </script>
+     <script type="text/javascript">
+        $(document).ready(function(){
+            $(".sidebar-btn").click(function(){
+                $(".wrapper").toggleClass("collapse");
+            });
+        });
+        </script>
 </body>
 </html>

@@ -1,378 +1,271 @@
-body {
-    background-image: url('assets/addadminjpg.jpg'); 
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    padding: 0;
-    margin: 0;
-}
-.container {
-  background-color: rgba(255, 255, 255, 0.7); 
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    padding: 30px;
-    margin-top: 50px;
-}
-.form-group label {
-    font-weight: bold;
-}
-.btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
-}
-.btn-primary:hover {
-    background-color: #0056b3;
-    border-color: #0056b3;
-}
-
-.card {
-  margin-bottom: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-.card-title {
-font-weight: bold;
-font-size: 20px;
-color: #0056b3; /* Blue color for titles */
-text-align: center; /* Centers the title text within its container */
-}
-
-.card-body {
-  padding: 20px;
-}
-.news-image-container {
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0.9);
-  margin: auto;
-  padding: 20px;
-  width: fit-content;
-  border-radius: 10px;
-}
-.responsive-img {
-  width: 600px;
-  height: auto;
-  display: block;
-  margin: 0 auto;
-  margin-bottom: 20px; /* Increased space between the image and text */
-}
-.card-text {
-font-size: 18px;
-font-family: 'Arial', sans-serif;
-color: #333;
-margin-top: 20px; /* Additional space above the text */
-text-align: left; /* Ensures text aligns to the left */
-}
-
-.header .nav {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: black;
-  padding: 0 20px;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  z-index: 1000;
-  height: 60px;
-}
-body {
-  padding-top: 60px;
-}
-.nav__bar .logo img {
-  height: 50px;
-}
-.nav__links {
-  display: flex;
-  list-style-type: none;
+*{
+  margin: 0;
   padding: 0;
-  align-items: center;
-  margin: 0 auto;
-}
-.nav__links li a {
-  display: block;
-  padding: 10px 15px;
-  color: white;
+  list-style: none;
   text-decoration: none;
-}
-.nav__btn {
-  background-color: red;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-}
-.nav__btn:hover {
-  background-color: darkred;
-}
-.nav_menu_btn {
-  display: none;
-  cursor: pointer;
-}
-@media (max-width: 768px) {
-  .header .nav {
-      justify-content: flex-start;
-  }
-  .nav__links {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-  }
-  .nav__links li a {
-      padding: 10px 8px;
-  }
-  .nav_menu_btn {
-      display: block;
-      margin-right: 10px;
-  }
-  .nav__btn {
-      padding: 10px 15px;
-  }
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
 }
 
-.footer {
-    background-color: var(--text-dark);
-  }
-  
-  .footer__container {
-    display: grid;
-    gap: 4rem 2rem;
-  }
-  
-  .footer__col .section__description {
-    margin-block: 2rem;
-  }
-  
-  .footer__col h4 {
-    margin-bottom: 2rem;
-    font-size: 1.2rem;
-    font-weight: 500;
-    color: var(--white);
-  }
-  
-  .footer__links {
-    list-style: none;
-    display: grid;
-    gap: 1rem;
-  }
-  
-  .footer__links a {
-    color: var(--text-light);
-    transition: 0.3s;
-  }
-  
-  .footer__links a:hover {
-    color: var(--white);
-  }
-  
-  .footer__socials {
-    margin-top: 2rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-  
-  .footer__socials img {
-    max-width: 25px;
-    opacity: 0.8;
-    transition: 0.3s;
-  }
-  
-  .footer__socials img:hover {
-    opacity: 1;
-  }
-  
-  .footer__bar {
-    padding: 1rem;
-    font-size: 0.9rem;
-    color: var(--text-light);
-    text-align: center;
-  }
-  
-  @media (width > 576px) {
-    .room__grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  
-    .footer__container {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-  
-  @media (width > 768px) {
-    nav {
-      padding: 2rem 1rem;
-      position: static;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-  
-    .nav__bar {
-      padding: 0;
-      background-color: transparent;
-    }
-  
-    .nav__menu__btn {
-      display: none;
-    }
-  
-    .nav__links {
-      padding: 0;
-      width: unset;
-      position: static;
-      transform: none;
-      flex-direction: row;
-      background-color: transparent;
-    }
-  
-    .nav__btn {
-      display: block;
-    }
-  
-    .nav__links a::after {
-      position: absolute;
-      content: "";
-      left: 0;
-      bottom: 0;
-      height: 2px;
-      width: 0;
-      background-color: var(--primary-color);
-      transition: 0.3s;
-      transform-origin: left;
-    }
-  
-    .nav__links a:hover::after {
-      width: 100%;
-    }
-  
-    .about__container {
-      grid-template-columns: repeat(2, 1fr);
-      align-items: center;
-    }
-  
-    .room__grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  
-    .service__content {
-      grid-column: 2/3;
-    }
-  
-    .footer__container {
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
-  .btn:hover {
-    background-color: var(--primary-color-dark);
-  }
-  
-  #countdown {
-    display: flex;
-    text-align: center;
-  }
-  .time {
-    margin: 0 15px;
-  }
-  
-  .time-number {
-    font-size: 50px;
-    font-weight: bold;
-    color: #fff;
-  }
-  
-  .time-label {
-    font-size: 16px;
-    color: #ccc;
-  }
-  :root {
-    --primary-color: #DC143C;
-    --primary-color-dark: #bc1c5c;
-    --text-dark: #0c0a09;
-    --text-light: #78716c;
-    --white: white;
-    --max-width: 1470px;
-  }
-  .btn {
-    padding: 0.75rem 1.5rem;
-    outline: none;
-    border: none;
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--white);
-    background-color: var(--primary-color);
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  a {
-    text-decoration: none;
-  }
-  .logo {
-    max-width: 120px;
-    margin-top: 2px;
-    }
-    .logo_img{
+body{
+  background: #fff;
+}
+.user-table {
   width: 100%;
+  margin-top: 20px;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.wrapper .header{
+  z-index: 1;
+  background: #22242A;
+  position: fixed;
+  width: calc(100% - 0%);
+  height: 70px;
+  display: flex;
+  top: 0;
+}
+h1 {
+  text-align: center;
+  font-size: 24px;
+  color: #333; /* or any color you prefer */
+  margin-bottom: 20px; /* adjust as needed */
+}
+
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 2px solid #ccc;
+  padding: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.btn {
+  display: inline-block;
+  background-color: #007bff; /* Blue color, you can change it */
+  color: #fff;
+  text-align: center;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: #0056b3; /* Darker blue color on hover */
+}
+
+#adminList {
+  text-align: center;
+  font-size: 16px;
+  color: #666; /* or any color you prefer */
+  padding: 20px;
+}
+
+.wrapper .header .header-menu{
+  width: calc(100% - 0%);
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.wrapper .header .header-menu .title{
+  color: #fff;
+  font-size: 25px;
+  text-transform: uppercase;
+  font-weight: 900;
+}
+.user-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Create four columns of equal width */
+  align-items: center;
+  padding: 10px 20px;
+  border-bottom: 1px solid #eee; /* Line to separate users */
+  background-color: #f9f9f9;
+}
+
+.wrapper .header .header-menu .title span{
+  color: #4CCEE8;
+}
+
+.wrapper .header .header-menu .sidebar-btn{
+  color: #fff;
+  position: absolute;
+  margin-left: 240px;
+  font-size: 22px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: 0.3s;
+  transition-property: color;
+}
+
+.wrapper .header .header-menu .sidebar-btn:hover{
+  color: #4CCEE8;
+}
+
+.wrapper .header .header-menu ul{
   display: flex;
 }
 
-body {
-    background-color: #f4f4f4; /* Light grey background for softer appearance */
-    color: #333; /* Dark grey text for better readability */
-    font-family: 'Arial', sans-serif; /* Standard, clean font */
+.wrapper .header .header-menu ul li a{
+  background: #fff;
+  color: #000;
+  display: block;
+  margin: 0 10px;
+  font-size: 18px;
+  width: 34px;
+  height: 34px;
+  line-height: 35px;
+  text-align: center;
+  border-radius: 50%;
+  transition: 0.3s;
+  transition-property: background, color;
 }
 
-/* Styling for date titles to make them prominent */
-.date-title {
-    font-size: 1.5em; /* Larger font size for visibility */
-    color: #0056b3; /* Darker blue for a professional look */
-    margin-top: 20px; /* Space above the date title */
-    margin-bottom: 15px; /* Space below the date title */
-    padding-left: 15px; /* Padding to align text slightly indented */
-    border-left: 5px solid #0056b3; /* Blue vertical bar for emphasis */
+.wrapper .header .header-menu ul li a:hover{
+  background: #4CCEE8;
+  color: #fff;
 }
 
-/* Styling for individual match cards within each date section */
-.card {
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow for depth */
-    background-color: #ffffff; /* White background for clarity */
-    border-radius: 8px; /* Rounded corners for modern appearance */
+.wrapper .sidebar{
+  z-index: 1;
+  background: #2F323A;
+  position: fixed;
+  top: 70px;
+  width: 250px;
+  height: calc(100% - 9%);
+  transition: 0.3s;
+  transition-property: width;
+  overflow-y: auto;
 }
 
-/* Header within card to separate date and provide visual structure */
-.card-header {
-    background-color: #007bff; /* Bootstrap primary blue for consistency */
-    color: #ffffff; /* White text for contrast */
-    font-weight: bold; /* Bold text for emphasis */
-    text-align: center; /* Centered text for balance */
+.wrapper .sidebar .sidebar-menu{
+  overflow: hidden;
 }
 
-
-.card-body {
-    padding: 15px; 
-    text-align: center;
+.wrapper .sidebar .sidebar-menu .profile img{
+  margin: 20px 0;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
 }
 
-
-.col-md-4 {
-    padding: 10px; 
+.wrapper .sidebar .sidebar-menu .profile p{
+  color: #bbb;
+  font-weight: 700;
+  margin-bottom: 10px;
 }
 
-
-.card:hover {
-    transform: scale(1.01); 
-    transition: transform 0.3s ease-in-out;
+.wrapper .sidebar .sidebar-menu .item{
+  width: 250px;
+  overflow: hidden;
 }
 
-a.text-decoration-none {
-    text-decoration: none; 
+.wrapper .sidebar .sidebar-menu .item .menu-btn{
+  display: block;
+  color: #fff;
+  position: relative;
+  padding: 25px 20px;
+  transition: 0.3s;
+  transition-property: color;
 }
-.container {
-    margin-top: 20px; 
-    background-color: rgba(255, 255, 255, 0.7); 
-    border-radius: 5px; 
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
-    padding: 15px; 
+
+.wrapper .sidebar .sidebar-menu .item .menu-btn:hover{
+  color: #4CCEE8;
 }
+
+.wrapper .sidebar .sidebar-menu .item .menu-btn i{
+  margin-right: 20px;
+}
+
+.wrapper .sidebar .sidebar-menu .item .menu-btn .drop-down{
+  float: right;
+  font-size: 12px;
+  margin-top: 3px;
+}
+
+.wrapper .sidebar .sidebar-menu .item .sub-menu{
+  background: #3498DB;
+  overflow: hidden;
+  max-height: 0;
+  transition: 0.3s;
+  transition-property: background, max-height;
+}
+
+.wrapper .sidebar .sidebar-menu .item .sub-menu a{
+  display: block;
+  position: relative;
+  color: #fff;
+  white-space: nowrap;
+  font-size: 15px;
+  padding: 20px;
+  transition: 0.3s;
+  transition-property: background;
+}
+
+.wrapper .sidebar .sidebar-menu .item .sub-menu a:hover{
+  background: #55B1F0;
+}
+
+.wrapper .sidebar .sidebar-menu .item .sub-menu a:not(last-child){
+  border-bottom: 1px solid #8FC5E9;
+}
+
+.wrapper .sidebar .sidebar-menu .item .sub-menu i{
+  padding-right: 20px;
+  font-size: 10px;
+}
+
+.wrapper .sidebar .sidebar-menu .item:target .sub-menu{
+  max-height: 500px;
+}
+
+.wrapper .main-container{
+  width: (100% - 250px);
+  margin-top: 70px;
+  margin-left: 250px;
+  padding: 15px;
+  background: url(background.jpg)no-repeat;
+  background-size: cover;
+  height: 100vh;
+  transition: 0.3s;
+}
+
+.wrapper.collapse .sidebar{
+  width: 70px;
+}
+
+.wrapper.collapse .sidebar .profile img,
+.wrapper.collapse .sidebar .profile p,
+.wrapper.collapse .sidebar a span{
+  display: none;
+}
+
+.wrapper.collapse .sidebar .sidebar-menu .item .menu-btn{
+  font-size: 23px;
+}
+
+.wrapper.collapse .sidebar .sidebar-menu .item .sub-menu i{
+  font-size: 18px;
+  padding-left: 3px;
+}
+
+.wrapper.collapse .main-container{
+  width: calc(100% - 70px);
+  margin-left: 70px;
+}
+
+.wrapper .main-container .card{
+  background: #fff;
+  padding: 15px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+      

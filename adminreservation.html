@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Users</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="adminuser.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
+    <title>Football Matches</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="adminreservation.css">  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
 </head>
 <body>
@@ -88,7 +87,7 @@
                 </li> 
                 <li class="item">
                     
-                     <a href="list_reservations.html" class="menu-btn">
+                    <a href="list_reservations.html" class="menu-btn">
                         <i class="fas fa-desktop"></i><span>Reservations</span>
                         
                     </a>
@@ -98,55 +97,60 @@
         <!--sidebar end-->
         <!--main container start-->
         <div class="main-container">
-            <h1>Manage Users</h1>
-                <div id="usersList" class="user-table"></div>   
-           
+            <h1 class="mb-3">Upcoming Football Matches</h1>
+            <div id="matches" class="row">
+                <!-- Matches will be loaded here -->
+            </div>
         </div>
         <!--main container end-->
     </div>
-    <script src="config.js"></script>
-    <script>
-    window.onload = function() {
-        const authToken = sessionStorage.getItem('authToken');
-        const isStaff = sessionStorage.getItem('isStaff') === 'true';
+   
+  
+      
+   
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
-        if (!authToken || !isStaff) {
-            window.location.href = 'login.html'; // Redirect if not authenticated or not staff
-        } else {
-            fetch(`${BASE_URL}/non-staff-users/`, {
-                method: 'GET',
-                headers: {
-                    'Authorization': 'Token ' + authToken,
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-    const usersContainer = document.getElementById('usersList');
-    // Adding a header row
-    let headerHTML = `
-        <div class="user-row header-row">
-            <div class="user-detail"><strong>Username</strong></div>
-            <div class="user-detail"><strong>Email</strong></div>
-            <div class="user-detail"><strong>First Name</strong></div>
-            <div class="user-detail"><strong>Last Name</strong></div>
-        </div>
-    `;
-    // Generating HTML for user data
-    let userRowsHTML = data.results.map(user => `
-        <div class="user-row">
-            <div class="user-detail">${user.username}</div>
-            <div class="user-detail">${user.email}</div>
-            <div class="user-detail">${user.first_name}</div>
-            <div class="user-detail">${user.last_name}</div>
-        </div>
-    `).join('');
-
-    usersContainer.innerHTML = headerHTML + userRowsHTML; // Combining headers with user rows
-})
-
-        }
-    };
-</script>
+    
+    
+    
 </body>
 </html>
+<script src="config.js"></script>
+<script>$(document).ready(function() {
+    $.getJSON(`${BASE_URL}/matches/`, function(data) {
+        let groupedByDate = data.results.reduce((acc, match) => {
+            (acc[match.date] = acc[match.date] || []).push(match);
+            return acc;
+        }, {});
+
+        let matchesHtml = Object.keys(groupedByDate).map(date => {
+            let matches = groupedByDate[date].map(match => `
+                <div class="col-12 mb-3">  
+                    <a href="list_reservations.html?match_id=${match.id}" class="text-decoration-none">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">
+                                    
+                                    <img src="${match.team1.logo}" alt="${match.team1.name} Logo" style="height: 20px;"> 
+                                    ${match.team1.name} vs ${match.team2.name}
+                                    <img src="${match.team2.logo}" alt="${match.team2.name} Logo" style="height: 20px;">
+                                    ${match.is_played ? `<br>Score: ${match.team1_score} : ${match.team2_score}` : ''}
+                                </h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            `).join('');
+            return `<div class="container"><div class="row"><h4 class="col-12 date-title">${date}</h4>${matches}</div></div>`;
+        }).join('');
+
+        $('#matches').html(matchesHtml);
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+        console.error("Error loading data: " + textStatus + ", " + errorThrown);
+        $('#matches').html('<p class="text-warning">Failed to load matches.</p>');
+    });
+});
+
+
+</script>
+<script src="countdown.js"></script>
