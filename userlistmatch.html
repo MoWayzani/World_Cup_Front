@@ -125,40 +125,43 @@
 </body>
 </html>
 <script src="config.js"></script>
-<script>$(document).ready(function() {
-    $.getJSON(`${BASE_URL}/matches/`, function(data) {
-        let groupedByDate = data.results.reduce((acc, match) => {
-            (acc[match.date] = acc[match.date] || []).push(match);
-            return acc;
-        }, {});
-
-        let matchesHtml = Object.keys(groupedByDate).map(date => {
-            let matches = groupedByDate[date].map(match => `
-                <div class="col-12 mb-3">  
-                    <a href="match_detail.html?match_id=${match.id}" class="text-decoration-none">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title text-center">
-                                    <img src="${match.team1.logo}" alt="${match.team1.name} Logo" style="height: 20px;"> 
-                                    ${match.team1.name} vs ${match.team2.name}
-                                    <img src="${match.team2.logo}" alt="${match.team2.name} Logo" style="height: 20px;">
-                                    ${match.is_played ? `<br>Score: ${match.team1_score} : ${match.team2_score}` : ''}
-                                </h5>
-                            </div>
+<script>
+    $(document).ready(function() {
+        $.getJSON(`${BASE_URL}/matches/`, function(data) {
+            let groupedByDate = data.results.reduce((acc, match) => {
+                (acc[match.date] = acc[match.date] || []).push(match);
+                return acc;
+            }, {});
+    
+            let matchesHtml = Object.keys(groupedByDate).map(date => {
+    let matches = groupedByDate[date].map(match => `
+        <div class="col-12 mb-3">
+            <a href="match_detail.html?match_id=${match.id}" class="text-decoration-none">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="match-info">
+                            <img src="${match.team1.logo}" alt="${match.team1.name} Logo" style="height: 40px; vertical-align: middle; margin-right: 10px;">
+                            <span>${match.team1.name}</span>
+                            <span class="vs">vs</span>
+                            <span>${match.team2.name}</span>
+                            <img src="${match.team2.logo}" alt="${match.team2.name} Logo" style="height: 40px; vertical-align: middle; margin-left: 10px;">
                         </div>
-                    </a>
+                        ${match.is_played ? `<div class="score"><span>Score: ${match.team1_score} - ${match.team2_score}</span></div>` : ''}
+                    </div>
                 </div>
-            `).join('');
-            return `<div class="container"><div class="row"><h4 class="col-12 date-title">${date}</h4>${matches}</div></div>`;
-        }).join('');
+            </a>
+        </div>
+    `).join('');
+    return `<div class="container"><div class="row"><h4 class="col-12 date-title">${date}</h4>${matches}</div></div>`;
+}).join('');
 
-        $('#matches').html(matchesHtml);
-    }).fail(function(jqXHR, textStatus, errorThrown) {
-        console.error("Error loading data: " + textStatus + ", " + errorThrown);
-        $('#matches').html('<p class="text-warning">Failed to load matches.</p>');
+    
+            $('#matches').html(matchesHtml);
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            console.error("Error loading data: " + textStatus + ", " + errorThrown);
+            $('#matches').html('<p class="text-warning">Failed to load matches.</p>');
+        });
     });
-});
-
-
-</script>
+    </script>
+    
 <script src="countdown.js"></script>

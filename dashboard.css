@@ -1,0 +1,445 @@
+/* Basic Reset and Font Setup */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+  }
+  body {
+    background-color: #f4f4f9; /* Light grey background for a clean look */
+    color: #333; /* Dark grey text for better readability */
+  }
+  /* Container for all content */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff; /* White background for content areas */
+    border-radius: 8px; /* Rounded corners for the container */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+  }
+  
+  h1, h2 {
+    color: #0056b3; /* Dark blue for headings for better contrast */
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  
+  p {
+    font-size: 16px; /* Slightly larger font size for better readability */
+    color: #666; /* Lighter text color */
+    line-height: 1.6;
+  }
+  
+  /* Styling for buttons */
+  button.btn {
+    background-color: #007bff; /* Primary blue color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button.btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+  button.btn-danger {
+    background-color: #dc3545; /* Bootstrap danger color for logout button */
+  }
+  
+  button.btn-danger:hover {
+    background-color: #bd2130; /* Darker red on hover */
+  }
+  
+  /* Card styling for matches and reservations */
+  .card {
+    background-color: #fff;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    margin-bottom: 20px;
+    border-radius: 5px;
+  }
+  
+  .card-header {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 15px;
+    font-size: 18px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    text-align: center;
+  }
+  
+  .card-body {
+    padding: 20px;
+    font-size: 16px;
+    color: #666;
+  }
+  
+  .card-link {
+    text-decoration: none;
+  }
+  .card-title {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 14px; /* Smaller font size for team names */
+  }
+  
+  /* Images within cards */
+  .card img {
+    height: 40px; /* Larger size for visibility */
+    width: auto;
+    margin-right: 10px;
+    vertical-align: middle;
+  }
+  
+  /* Responsive Grid Layout */
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+  }
+  
+  .col-md-4 {
+    width: 33.333333%;
+    padding: 0 15px;
+    box-sizing: border-box;
+  }
+  
+  @media (max-width: 768px) {
+    .col-md-4 {
+      width: 100%; /* Full width on smaller screens */
+    }
+  }
+  body {
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: url('assets/login.jpg') no-repeat center center fixed;
+  }
+  .container {
+    margin-top: 50px;
+  }.card {
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }.card-title {
+    font-size: 24px;
+    color: #0056b3;
+  }
+  
+  .card-body {
+    padding: 20px;
+    background-color: #fff; /* Solid white background for readability */
+  }
+  .news-image-container {
+    text-align: center;
+    padding: 20px;
+  }
+  .responsive-img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+  }
+  .card-text {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #666;
+    text-align: left;
+  }
+  
+  .header .nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    padding: 0 20px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    height: 60px;
+  }
+  body {
+    padding-top: 60px;
+  }
+  .nav__bar .logo img {
+    height: 50px;
+  }
+  .nav__links {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    align-items: center;
+    margin: 0 auto;
+  }
+  .nav__links li a {
+    display: block;
+    padding: 10px 15px;
+    color: white;
+    text-decoration: none;
+  }
+  .nav__btn {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  .nav__btn:hover {
+    background-color: darkred;
+  }
+  .nav_menu_btn {
+    display: none;
+    cursor: pointer;
+  }
+  @media (max-width: 768px) {
+    .header .nav {
+        justify-content: flex-start;
+    }
+    .nav__links {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+    .nav__links li a {
+        padding: 10px 8px;
+    }
+    .nav_menu_btn {
+        display: block;
+        margin-right: 10px;
+    }
+    .nav__btn {
+        padding: 10px 15px;
+    }
+  }
+     
+  :root {
+    --primary-color: #DC143C;
+    --primary-color-dark: #bc1c5c;
+    --text-dark: #0c0a09;
+    --text-light: #78716c;
+    --white: white;
+    --max-width: 1470px;
+  }
+  .btn {
+    padding: 0.75rem 1.5rem;
+    outline: none;
+    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--white);
+    background-color: var(--primary-color);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+  }.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff; /* White background for content areas */
+    border-radius: 8vp; /* Rounded corners for the container */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+  }
+  
+  .header-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  h1, h2 {
+    color: #0056b3; /* Dark blue for headings for better contrast */
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .user-welcome p {
+    font-size: 16px; /* Slightly larger font size for better readability */
+    color: #666; /* Lighter text color */
+    line-height: 1.6;
+    display: inline-block;
+  }
+  
+  .user-welcome {
+    text-align: right;
+  }
+  
+  /* Styling for buttons */
+  button.btn {
+    background-color: #007bff; /* Primary blue color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-left: 10px;
+  }
+  
+  button.btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+  button.btn-danger {
+    background-color: #dc3545; /* Bootstrap danger color for logout button */
+  }
+  
+  button.btn-danger:hover {
+    background-color: #bd2130; /* Darker red on hover */
+  }
+  
+  /* Card styling for matches and reservations */
+  .card {
+    background-color: #fff;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    margin-bottom: 20px;
+    border-radius: 5px;
+    transition: transform 0.3s;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .card-header {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 15px;
+    font-size: 18px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    text-align: center;
+  }
+  
+  .card-body {
+    padding: 20px;
+    font-size: 16px;
+    color: #666;
+  }
+  
+  .card-link {
+    text-decoration: none;
+  }
+  
+  .card-title {
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  
+  /* Images within cards */
+  .card img {
+    height: 40px; /* Larger size for visibility */
+    width: auto;
+    margin-right: 10px;
+    vertical-align: middle;
+  }
+  
+  /* Responsive Grid Layout */
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+  }
+  
+  .col-md-4 {
+    width: 33.333333%;
+    padding: 0 15px;
+    box-sizing: border-box;
+  }
+  
+  @media (max-width: 768px) {
+    .col-md-4 {
+      width: 100%; /* Full width on smaller screens */
+    }
+  
+    .header-area {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .user-welcome {
+      text-align: left;
+      margin-top: 10px;
+    }
+  }
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff; /* White background for the main container */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+}
+
+.header-area, .matches-container, .reservations-container {
+    margin-bottom: 30px; /* Adds spacing between sections */
+}
+
+.section-title {
+    color: #0056b3; /* Blue for section titles */
+    margin-bottom: 15px; /* Space below the title */
+}
+
+.matches-container, .reservations-container {
+    padding: 20px;
+    background: #f8f9fa; /* Light grey background for each section */
+    border-radius: 5px; /* Slightly rounded corners for sub-containers */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Light shadow for separation */
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.col-md-4 {
+    width: 33.333333%;
+    padding: 15px; /* Padding inside each column for spacing */
+    box-sizing: border at box;
+}
+
+.card {
+    background-color: #fff;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+.card:hover {
+    transform: translateY(-5px); /* Slight lift effect on hover */
+}
+
+.card-header, .card-body {
+    padding: 15px;
+    text-align: center;
+}
+
+.card-title {
+    font-size: 14px; /* Adjusted font size for readability */
+}
+
+.card img {
+    height: 20px;
+    width: auto;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+    .col-md-4 {
+        width: 100%; /* Full width on smaller screens */
+    }
+}

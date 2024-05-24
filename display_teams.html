@@ -85,12 +85,23 @@
                         <a href="create_match.html"><i class="fas fa-lock"></i><span>Create Match</span></a>
                         <a href="list_matches.html"><i class="fas fa-language"></i><span>List Match</span></a>
                     </div>
+                   
+                </li> 
+                <li class="item" id="scorer">
+                    <a href="#scorer" class="menu-btn">
+                        <i class="fas fa-cog"></i><span>Scorer <i class="fas fa-chevron-down drop-down"></i></span>
+                    </a>
+                    <div class="sub-menu">
+                        <a href="add_scorer.html"><i class="fas fa-lock"></i><span>Add Scorer</span></a>
+                        <a href="scorer_list.html"><i class="fas fa-language"></i><span>List Scorer</span></a>
+                    </div>
                     
                 </li> 
+                
                 <li class="item">
                     
                     <a href="list_reservations.html" class="menu-btn">
-                        <i class="fas fa-desktop"></i><span>Reservations</span>
+                        <i class="fas fa-address-card"></i><span>Reservations</span>
                         
                     </a>
                 </li>
@@ -174,7 +185,11 @@
         document.getElementById('teamsList').innerHTML = '<p>Error loading teams.</p>';
     });
 
-
+    function logout() {
+                sessionStorage.removeItem('authToken');
+                sessionStorage.removeItem('isStaff');
+                window.location.href = 'login.html'; // Redirect to login on logout
+            }
     </script>
     
 </body>

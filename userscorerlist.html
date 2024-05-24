@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <title>Top Goal Scorers</title>
+</head>
+<body>
+    <div class="container">
+        <h2 class="my-4">Top Goal Scorers</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Team</th>
+                    <th>Position</th>
+                    <th>Goals</th>
+                    <th>Matches Played</th>
+                   
+                </tr>
+            </thead>
+            <tbody id="scorerTableBody">
+                <!-- Scorer rows will be inserted here by JavaScript -->
+            </tbody>
+        </table>
+        <div id="message" class="mt-4"></div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="config.js"></script>
+    <script>
+        $(document).ready(function() {
+            function loadScorers() {
+                $.getJSON(`${BASE_URL}/scorers/list/`, function(data) {
+                    var scorerTableBody = $('#scorerTableBody');
+                    scorerTableBody.empty();
+                    data.forEach(function(scorer) {
+                        var row = '<tr>' +
+                                  '<td>' + scorer.name + '</td>' +
+                                  '<td>' + scorer.team + '</td>' +
+                                  '<td>' + scorer.position + '</td>' +
+                                  '<td>' + scorer.goals + '</td>' +
+                                  '<td>' + scorer.matches_played + '</td>' +
+                                   
+                                  '</tr>';
+                        scorerTableBody.append(row);
+                    });
+
+                    $('.delete-btn').click(function() {
+                        var scorerId = $(this).data('id');
+                        $.ajax({
+                            url: `${BASE_URL}/scorers/delete/` + scorerId + '/',
+                            type: 'POST',
+                            success: function(result) {
+                                $('#message').html('<div class="alert alert-success">Scorer deleted successfully!</div>');
+                                loadScorers();  // Reload the scorers list
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                $('#message').html('<div class="alert alert-danger">Error deleting scorer: ' + textStatus + '</div>');
+                            }
+                        });
+                    });
+                }).fail(function(jqXHR, textStatus, errorThrown) {
+                    $('#message').html('<div class="alert alert-danger">Error fetching scorers: ' + textStatus + '</div>');
+                });
+            }
+
+            loadScorers();  // Load scorers when the page is ready
+        });
+    </script>
+</body>
+</html>

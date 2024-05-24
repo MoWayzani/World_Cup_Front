@@ -2,12 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Team</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <title>Create Scorer</title> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
-    <link rel="stylesheet" href="add_team.css">
+    <link rel="stylesheet" href="add_scorer.css">
 </head>
 <body>
     <div class="wrapper">
@@ -103,104 +102,101 @@
                         <i class="fas fa-desktop"></i><span>Reservations</span>
                         
                     </a>
+
                 </li>
             </div>
         </div>
         <!--sidebar end-->
         <!--main container start-->
         <div class="main-container">
-            <h1 class="mt-5">Create Team</h1>
-        <form id="teamForm" enctype="multipart/form-data" class="mt-4">
-            <div class="form-group">
-                <label for="teamName">Team Name</label>
-                <input type="text" class="form-control" id="teamName" placeholder="Enter team name" required>
-            </div>
-            <div class="form-group">
-                <label for="groupSelect">Group Name</label>
-                <select class="form-control" id="groupSelect">
-                    <option value="A">Group A</option>
-                    <option value="B">Group B</option>
-                    <option value="C">Group C</option>
-                    <option value="D">Group D</option>
-                    <option value="E">Group E</option>
-                    <option value="F">Group F</option>
-                    <option value="G">Group G</option>
-                    <option value="H">Group H</option>
-                    <option value="H">Group I</option>
-                    <option value="H">Group J</option>
-                    <option value="H">Group K</option>
-                    <option value="H">Group L</option>
-                    <option value="H">Group M</option>
-                    <option value="H">Group N</option>
-                    <option value="H">Group O</option>
-                    <option value="H">Group P</option>
-                    <option value="H">Group Q</option>
-                    <option value="H">Group R</option>
-                    <option value="H">Group S</option>
-                    <option value="H">Group T</option>
-                    <option value="H">Group U</option>
-                    <option value="H">Group V</option>
-                    <option value="H">Group W</option>
-                    <option value="H">Group X</option>
-                    <option value="H">Group Y</option>
-                    <option value="H">Group Z</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="teamLogo">Team Logo</label>
-                <input type="file" class="form-control-file" id="teamLogo" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-            
-        </form>
+           
+            <h2 class="my-4">Add a New Scorer</h2>
+            <form id="scorerForm">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="goals">Goals</label>
+                    <input type="number" class="form-control" id="goals" name="goals" required>
+                </div>
+                <div class="form-group">
+                    <label for="team">Team</label>
+                    <select class="form-control" id="team" name="team" required></select>
+                </div>
+                <div class="form-group">
+                    <label for="position">Position</label>
+                    <input type="text" class="form-control" id="position" name="position" required>
+                </div>
+                <div class="form-group">
+                    <label for="matches_played">Matches Played</label>
+                    <input type="number" class="form-control" id="matches_played" name="matches_played" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            <div id="message" class="mt-4"></div>
         </div>
         <!--main container end-->
     </div>
-    <div class="container">
-       
-    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="config.js"></script>
     <script>
-        window.onload = function() {
+          window.onload = function() {
                 const authToken = sessionStorage.getItem('authToken');
                 const isStaff = sessionStorage.getItem('isStaff') === 'true';
     
                 if (!authToken || !isStaff) {
-                    window.location.href = 'login.html'; // Ensure only admins can access the admin dashboard
+                    window.location.href = 'login.html'; 
                 } else {
-        document.getElementById('teamForm').onsubmit = function(event) {
-            event.preventDefault();
-            const formData = new FormData();
-            formData.append('name', document.getElementById('teamName').value);
-            formData.append('group_name', document.getElementById('groupSelect').value);
-            formData.append('logo', document.getElementById('teamLogo').files[0]);
-
-            fetch(`${BASE_URL}/teams/`, {
-                method: 'POST',
-                body: formData  // FormData will set the Content-Type to 'multipart/form-data'
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                alert('Team created successfully!');
-                document.getElementById('teamForm').reset(); // Reset the form after successful submission
-            })
-            .catch(error => {
-                alert('Error creating team: ' + error.message);
+        $(document).ready(function() {
+            $.getJSON(`${BASE_URL}/teams/list/`, function(data) {
+        console.log(data);  // Log the response to see its format
+        var teamSelect = $('#team');
+        var teams = data.results || data;  // Adjust this line based on the actual response format
+        if (Array.isArray(teams)) {
+            teams.forEach(function(team) {
+                teamSelect.append('<option value="' + team.id + '">' + team.name + '</option>');
             });
-        };
-    }
-}
-function logout() {
+        } else {
+            $('#message').html('<div class="alert alert-danger">Unexpected response format</div>');
+        }
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+        $('#message').html('<div class="alert alert-danger">Error fetching teams: ' + textStatus + '</div>');
+    });
+
+            $('#scorerForm').on('submit', function(event) {
+                event.preventDefault();
+                var formData = {
+                    name: $('#name').val(),
+                    goals: $('#goals').val(),
+                    team: $('#team').val(),
+                    position: $('#position').val(),
+                    matches_played: $('#matches_played').val(),
+                };
+                
+                $.ajax({
+                    url: `${BASE_URL}/scorer/create/`,
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(formData),
+                    success: function(response) {
+                        $('#message').html('<div class="alert alert-success">Scorer added successfully!</div>');
+                        $('#scorerForm')[0].reset();
+                    },
+                    error: function(response) {
+                        $('#message').html('<div class="alert alert-danger">Error adding scorer: ' + response.responseText + '</div>');
+                    }
+                });
+            });
+        });
+        function logout() {
                 sessionStorage.removeItem('authToken');
                 sessionStorage.removeItem('isStaff');
                 window.location.href = 'login.html'; // Redirect to login on logout
             }
+        }
+    }
     </script>
-    
 </body>
 </html>

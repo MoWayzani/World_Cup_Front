@@ -5,25 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="dashboard.css">
 </head>
 <body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav__bar">
+                <div class="logo">
+                    <a href="#"><img src="assets/logo.png" alt="FIFA Logo"></a>
+                </div>
+                <div class="nav_menu_btn" id="menu-btn">
+                    <i class="ri-menu-line"></i>
+                </div>
+            </div>
+            <ul class="nav__links" id="nav-links">
+                <li><a href="user.html">Home</a></li>
+                <li><a href="user_news.html">News</a></li>
+                <li><a href="Groupstage.html">Group Stage</a></li>
+                <li><a href="userlistmatch.html">Matches</a></li>
+                <li><a href="quiz.html">Quiz</a></li>
+            </ul>
+          
+        </nav>
+    </header>
     <div class="container">
-        <h1 class="mt-5">Dashboard</h1>
-        <p>Welcome, <span id="userName">Loading...</span>!</p>
-        <button onclick="logout()" class="btn btn-danger">Logout</button>
-
-        <!-- Section to display matches -->
-        <h2 class="mb-3">Upcoming Football Matches</h2>
-        <div id="matches" class="row">
-            <!-- Matches will be loaded here -->
+        <div class="header-area">
+            <h1 class="mt-5">Dashboard</h1>
+            <div class="user-welcome">
+                <p>Welcome, <span id="userName">Loading...</span>!</p>
+                <br>
+                <button onclick="logout()" class="btn btn-danger">Logout</button>
+            </div>
         </div>
-
+        <div class="matches-container">
+            <h2 class="section-title">Upcoming Football Matches</h2>
+            <div id="matches" class="row">
+                <!-- Matches will be loaded here -->
+            </div>
+        </div>
+    
         <!-- Section to display user reservations -->
-        <h2 class="mb-3">Your Reservations</h2>
-        <div id="reservations" class="row">
-            <!-- Reservations will be loaded here -->
+        <div class="reservations-container">
+            <h2 class="section-title">Your Reservations</h2>
+            <div id="reservations" class="row">
+                <!-- Reservations will be loaded here -->
+            </div>
         </div>
-    </div>
+    
     <script src="config.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
@@ -59,7 +87,7 @@
                                         ${match.date}
                                     </div>
                                     <div class="card-body">
-                                        <h5 class="card-title text-center">
+                                        <h5 class="card-title text-center" style="font-size: 16px;">
                                             <img src="${match.team1.logo}" alt="${match.team1.name} Logo" style="height: 20px;"> 
                                             ${match.team1.name} vs ${match.team2.name}
                                             <img src="${match.team2.logo}" alt="${match.team2.name} Logo" style="height: 20px;">

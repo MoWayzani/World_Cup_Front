@@ -84,12 +84,23 @@
                         <a href="create_match.html"><i class="fas fa-lock"></i><span>Create Match</span></a>
                         <a href="list_matches.html"><i class="fas fa-language"></i><span>List Match</span></a>
                     </div>
+                   
+                </li> 
+                <li class="item" id="scorer">
+                    <a href="#scorer" class="menu-btn">
+                        <i class="fas fa-cog"></i><span>Scorer <i class="fas fa-chevron-down drop-down"></i></span>
+                    </a>
+                    <div class="sub-menu">
+                        <a href="add_scorer.html"><i class="fas fa-lock"></i><span>Add Scorer</span></a>
+                        <a href="scorer_list.html"><i class="fas fa-language"></i><span>List Scorer</span></a>
+                    </div>
                     
                 </li> 
+                
                 <li class="item">
                     
                      <a href="list_reservations.html" class="menu-btn">
-                        <i class="fas fa-desktop"></i><span>Reservations</span>
+                        <i class="fas fa-address-card"></i><span>Reservations</span>
                         
                     </a>
                 </li>
@@ -113,6 +124,7 @@
         if (!authToken || !isStaff) {
             window.location.href = 'login.html'; // Redirect if not authenticated or not staff
         } else {
+          
             fetch(`${BASE_URL}/non-staff-users/`, {
                 method: 'GET',
                 headers: {
@@ -120,9 +132,12 @@
                     'Content-Type': 'application/json'
                 }
             })
+            
             .then(response => response.json())
             .then(data => {
+                document.getElementById('userName').textContent = data.first_name + ' ' + data.last_name;
     const usersContainer = document.getElementById('usersList');
+    
     // Adding a header row
     let headerHTML = `
         <div class="user-row header-row">
@@ -132,6 +147,37 @@
             <div class="user-detail"><strong>Last Name</strong></div>
         </div>
     `;
+    window.onload = function() {
+            authToken = sessionStorage.getItem('authToken');
+            isStaff = sessionStorage.getItem('isStaff') === 'true';
+
+            if (!authToken || !isStaff) {
+                window.location.href = 'login.html'; // Ensure only admins can access the admin dashboard
+            } else {
+                
+                fetchUserDetails();
+            }
+        };
+    function fetchUserDetails() {
+            fetch(`${BASE_URL}/user-details/`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Token ' + authToken,
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('userName').textContent = data.first_name + ' ' + data.last_name;
+            })
+            .catch(error => {
+                console.error('Error fetching user details:', error);
+                alert('Error fetching user details. Please log in again.');
+                logout();
+            });
+        }
+
+            
     // Generating HTML for user data
     let userRowsHTML = data.results.map(user => `
         <div class="user-row">
@@ -145,8 +191,15 @@
     usersContainer.innerHTML = headerHTML + userRowsHTML; // Combining headers with user rows
 })
 
+
         }
     };
+    
+    function logout() {
+                sessionStorage.removeItem('authToken');
+                sessionStorage.removeItem('isStaff');
+                window.location.href = 'login.html'; // Redirect to login on logout
+            }
 </script>
 </body>
 </html>

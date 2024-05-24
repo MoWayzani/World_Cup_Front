@@ -5,19 +5,132 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Match Details</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="match_detail.css">
+    <link rel="stylesheet" href="match_detail.css"> <title>Create Scorer</title> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="add_scorer.css">
 </head>
 <body>
-    
-    
-    <div class="container mt-5" id="matchDetails">
-        <!-- Match details will be loaded here -->
+    <div class="wrapper">
+        <!--header menu start-->
+        <div class="header">
+            <div class="header-menu">
+                <div class="title">World <span>Cup</span></div>
+                <div class="sidebar-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <ul>
+                      <center class="profile">
+                    
+                    <p> <span id="userName">Loading...</span></p>
+                </center>
+                    <li><a href="#"><i class="fas fa-power-off" onclick="logout()" class="btn btn-danger"></i></a></li>
+                </ul>
+            </div>
+        </div>
+        <!--header menu end-->
+        <!--sidebar start-->
+        <div class="sidebar">
+            <div class="sidebar-menu">
+              
+                <li class="item">
+                    <a href="admin.html" class="menu-btn">
+                        <i class="fas fa-desktop"></i><span>Dashboard</span>
+                        
+                    </a>
+                </li>
+
+                <li class="item">
+                    <a href="adminuser.html" class="menu-btn">
+                        <i class="fas fa-desktop"></i><span>Manage User</span>
+                        
+                    </a>
+                </li>
+
+              
+                
+                <li class="item" id="profile">
+                    <a href="#profile" class="menu-btn">
+                        <i class="fas fa-user-circle"></i><span>News <i class="fas fa-chevron-down drop-down"></i></span>
+                    </a>
+                    <div class="sub-menu">
+                        <a href="add_news.html"><i class="fas fa-image"></i><span>Add News</span></a>
+                        <a href="admin_news.html"><i class="fas fa-address-card"></i><span>View News</span></a>
+                    </div>
+                </li>
+                <li class="item" id="messages">
+                    <a href="#messages" class="menu-btn">
+                        <i class="fas fa-envelope"></i><span>Teams <i class="fas fa-chevron-down drop-down"></i></span>
+                    </a>
+                    <div class="sub-menu">
+                        <a href="add_team.html"><i class="fas fa-envelope"></i><span>Add Teams</span></a>
+                        <a href="display_teams.html"><i class="fas fa-envelope-square"></i><span>Display Teams</span></a>
+                       
+                    </div>
+                </li>
+                <li class="item" id="settings">
+                    <a href="#settings" class="menu-btn">
+                        <i class="fas fa-cog"></i><span>Stadiums <i class="fas fa-chevron-down drop-down"></i></span>
+                    </a>
+                    <div class="sub-menu">
+                        <a href="add_stadium.html"><i class="fas fa-lock"></i><span>Add Stadium</span></a>
+                        <a href="list_stadiums.html"><i class="fas fa-language"></i><span>List Stadium</span></a>
+                    </div>
+                </li>
+                <li class="item" id="matches">
+                    <a href="#matches" class="menu-btn">
+                        <i class="fas fa-cog"></i><span>Matches <i class="fas fa-chevron-down drop-down"></i></span>
+                    </a>
+                    <div class="sub-menu">
+                        <a href="create_match.html"><i class="fas fa-lock"></i><span>Create Match</span></a>
+                        <a href="list_matches.html"><i class="fas fa-language"></i><span>List Match</span></a>
+                    </div>
+                 
+                </li> 
+                <li class="item" id="scorer">
+                    <a href="#scorer" class="menu-btn">
+                        <i class="fas fa-cog"></i><span>Scorer <i class="fas fa-chevron-down drop-down"></i></span>
+                    </a>
+                    <div class="sub-menu">
+                        <a href="add_scorer.html"><i class="fas fa-lock"></i><span>Add Scorer</span></a>
+                        <a href="scorer_list.html"><i class="fas fa-language"></i><span>List Scorer</span></a>
+                    </div>
+                    
+                </li> 
+                
+                <li class="item">
+                    
+                    <a href="list_reservations.html" class="menu-btn">
+                        <i class="fas fa-desktop"></i><span>Reservations</span>
+                       
+                    </a>
+
+                </li>
+            </div>
+        </div>
+        <!--sidebar end-->
+        <!--main container start-->
+        <div class="main-container">
+           
+            <div class="container mt-5" id="matchDetails">
+                <!-- Match details will be loaded here -->
+                
+            </div>
+            <a href="list_matches.html" class="btn btn-primary">Back</a>
+        <!--main container end-->
     </div>
+    
+ 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="config.js"></script>
     <script>
-        
+          window.onload = function() {
+                const authToken = sessionStorage.getItem('authToken');
+                const isStaff = sessionStorage.getItem('isStaff') === 'true';
+    
+                if (!authToken || !isStaff) {
+                    window.location.href = 'login.html'; 
+                } else {
         $(document).ready(function() {
             const queryParams = new URLSearchParams(window.location.search);
             const matchId = queryParams.get('match_id');
@@ -51,6 +164,8 @@
                 $('#matchDetails').html('<p class="text-warning">Failed to load match details.</p>');
             });
         });
+    }
+}
     </script>
     
 </body>

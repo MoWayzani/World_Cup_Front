@@ -75,20 +75,31 @@
                         <a href="list_stadiums.html"><i class="fas fa-language"></i><span>List Stadium</span></a>
                     </div>
                 </li>
-                <li class="item" id="matches">
-                    <a href="#matches" class="menu-btn">
+                <li class="item" id="matchess">
+                    <a href="#matchess" class="menu-btn">
                         <i class="fas fa-cog"></i><span>Matches <i class="fas fa-chevron-down drop-down"></i></span>
                     </a>
                     <div class="sub-menu">
                         <a href="create_match.html"><i class="fas fa-lock"></i><span>Create Match</span></a>
                         <a href="list_matches.html"><i class="fas fa-language"></i><span>List Match</span></a>
                     </div>
+                   
+                </li> 
+                <li class="item" id="scorer">
+                    <a href="#scorer" class="menu-btn">
+                        <i class="fas fa-cog"></i><span>Scorer <i class="fas fa-chevron-down drop-down"></i></span>
+                    </a>
+                    <div class="sub-menu">
+                        <a href="add_scorer.html"><i class="fas fa-lock"></i><span>Add Scorer</span></a>
+                        <a href="scorer_list.html"><i class="fas fa-language"></i><span>List Scorer</span></a>
+                    </div>
                     
                 </li> 
+                
                 <li class="item">
                     
                     <a href="list_reservations.css" class="menu-btn">
-                        <i class="fas fa-desktop"></i><span>Reservations</span>
+                        <i class="fas fa-address-card"></i><span>Reservations</span>
                         
                     </a>
                 </li>
@@ -136,7 +147,7 @@
                                     ${match.is_played ? ` - Score: ${match.team1_score} : ${match.team2_score}` : ''}
                                 </h5>
                                 <div class="text-center mt-3">
-                                    <a href="match_detail.html?match_id=${match.id}" class="btn btn-primary">Details</a>
+                                    <a href="adminmatch_detail.html?match_id=${match.id}" class="btn btn-primary">Details</a>
                                     <a href="edit_match.html?match_id=${match.id}" class="btn btn-warning">Edit</a>
                                     <button onclick="deleteMatch(${match.id})" class="btn btn-danger">Delete</button>
                                 </div>
@@ -169,6 +180,11 @@
         });
     }
 }
+function logout() {
+                sessionStorage.removeItem('authToken');
+                sessionStorage.removeItem('isStaff');
+                window.location.href = 'login.html'; // Redirect to login on logout
+            }
     </script>
     
     

@@ -9,6 +9,7 @@
 
 body{
   background: #fff;
+  background: url('assets/login.jpg') no-repeat center center fixed;
 }
 .user-table {
   width: 100%;
@@ -30,7 +31,7 @@ body{
 h1 {
   text-align: center;
   font-size: 24px;
-  color: #333; /* or any color you prefer */
+  color: white; /* or any color you prefer */
   margin-bottom: 20px; /* adjust as needed */
 }
 
@@ -268,4 +269,338 @@ h1 {
   margin-bottom: 10px;
   font-size: 14px;
 }
-      
+body {
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+.container {
+  margin-top: 50px;
+}
+.card {
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.card-title {
+font-weight: bold;
+font-size: 24px;
+color: #0056b3; /* Blue color for titles */
+text-align: center; /* Centers the title text within its container */
+}
+
+.card-body {
+  padding: 20px;
+}
+.news-image-container {
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.9);
+  margin: auto;
+  padding: 20px;
+  width: fit-content;
+  border-radius: 10px;
+}
+.responsive-img {
+  width: 600px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 20px; /* Increased space between the image and text */
+}
+.card-text {
+font-size: 18px;
+font-family: 'Arial', sans-serif;
+color: #333;
+margin-top: 20px; /* Additional space above the text */
+text-align: left; /* Ensures text aligns to the left */
+}
+
+.header .nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  padding: 0 20px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  height: 60px;
+}
+body {
+  padding-top: 60px;
+}
+.nav__bar .logo img {
+  height: 50px;
+}
+.nav__links {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  align-items: center;
+  margin: 0 auto;
+}
+.nav__links li a {
+  display: block;
+  padding: 10px 15px;
+  color: white;
+  text-decoration: none;
+}
+.nav__btn {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+.nav__btn:hover {
+  background-color: darkred;
+}
+.nav_menu_btn {
+  display: none;
+  cursor: pointer;
+}
+@media (max-width: 768px) {
+  .header .nav {
+      justify-content: flex-start;
+  }
+  .nav__links {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+  }
+  .nav__links li a {
+      padding: 10px 8px;
+  }
+  .nav_menu_btn {
+      display: block;
+      margin-right: 10px;
+  }
+  .nav__btn {
+      padding: 10px 15px;
+  }
+}
+   
+:root {
+  --primary-color: #DC143C;
+  --primary-color-dark: #bc1c5c;
+  --text-dark: #0c0a09;
+  --text-light: #78716c;
+  --white: white;
+  --max-width: 1470px;
+}
+.match-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #333;
+}
+.date-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #0056b3; /* Blue color to highlight date */
+  background-color: #f4f4f9; /* Slight background tint for separation */
+  padding: 10px 15px;
+  margin-top: 20px;
+  border-radius: 8px; /* Rounded corners for a modern look */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Soft shadow for depth */
+  text-align: center;
+}
+
+.vs {
+  margin: 0 10px;
+  font-weight: bold;
+  color: #007BFF;
+}
+
+.score {
+  text-align: center;
+  color: #DC143C;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  outline: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--white);
+  background-color: var(--primary-color);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background-color: var(--primary-color-dark);
+}
+
+#countdown {
+  display: flex;
+  text-align: center;
+}
+.time {
+  margin: 0 15px;
+}
+
+.time-number {
+  font-size: 50px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.time-label {
+  font-size: 16px;
+  color: #ccc;
+}
+
+.footer {
+  background-color: var(--text-dark);
+}
+
+.footer__container {
+  display: grid;
+  gap: 4rem 2rem;
+}
+
+.footer__col .section__description {
+  margin-block: 2rem;
+}
+
+.footer__col h4 {
+  margin-bottom: 2rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--white);
+}
+
+.footer__links {
+  list-style: none;
+  display: grid;
+  gap: 1rem;
+}
+
+.footer__links a {
+  color: var(--text-light);
+  transition: 0.3s;
+}
+
+.footer__links a:hover {
+  color: var(--white);
+}
+
+.footer__socials {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.footer__socials img {
+  max-width: 25px;
+  opacity: 0.8;
+  transition: 0.3s;
+}
+
+.footer__socials img:hover {
+  opacity: 1;
+}
+
+.footer__bar {
+  padding: 1rem;
+  font-size: 0.9rem;
+  color: var(--text-light);
+  text-align: center;
+}
+
+@media (width > 576px) {
+  .room__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .footer__container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width > 768px) {
+  nav {
+    padding: 2rem 1rem;
+    position: static;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav__bar {
+    padding: 0;
+    background-color: transparent;
+  }
+
+  .nav__menu__btn {
+    display: none;
+  }
+
+  .nav__links {
+    padding: 0;
+    width: unset;
+    position: static;
+    transform: none;
+    flex-direction: row;
+    background-color: transparent;
+  }
+
+  .nav__btn {
+    display: block;
+  }
+
+  .nav__links a::after {
+    position: absolute;
+    content: "";
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 0;
+    background-color: var(--primary-color);
+    transition: 0.3s;
+    transform-origin: left;
+  }
+
+  .nav__links a:hover::after {
+    width: 100%;
+  }
+
+  .about__container {
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+  }
+
+  .room__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .service__content {
+    grid-column: 2/3;
+  }
+
+  .footer__container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.logo_img{
+  width: 100%;
+  display: flex;
+}
+a {
+  text-decoration: none;
+}
+.logo {
+max-width: 120px;
+margin-top: 2px;
+}
