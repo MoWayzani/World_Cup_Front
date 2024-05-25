@@ -194,6 +194,7 @@
     }
 
     .footer {
+      padding: 2%;
       background-color: var(--text-dark);
     }
     

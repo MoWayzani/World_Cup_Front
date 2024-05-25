@@ -4,9 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="userscorerlist.css">
     <title>Top Goal Scorers</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f4f4f4;
+            color: #333;
+            background-image: url("assets/login.jpg");
+            background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+            
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+           
+            margin: auto;
+        }
+        h2 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
 </head>
 <body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav__bar">
+                <div class="logo">
+                    <a href="#"><img src="assets/logo.png" alt="FIFA Logo"></a>
+                </div>
+                <div class="nav_menu_btn" id="menu-btn">
+                    <i class="ri-menu-line"></i>
+                </div>
+            </div>
+            <ul class="nav__links" id="nav-links">
+                <li><a href="user.html">Home</a></li>
+                <li><a href="user_news.html">News</a></li>
+                <li><a href="Groupstage.html">Group Stage</a></li>
+                <li><a href="userlistmatch.html">Matches</a></li>
+                <li><a href="userscorerlist.html">Top Scorer</a></li>
+                <li><a href="quiz.html">Quiz</a></li>
+            </ul>
+            <a href="signup.html" class="btn nav__btn">Get Ticket</a>
+        </nav>
+    </header>
+    <br><br>
     <div class="container">
         <h2 class="my-4">Top Goal Scorers</h2>
         <table class="table table-striped">
@@ -17,7 +80,6 @@
                     <th>Position</th>
                     <th>Goals</th>
                     <th>Matches Played</th>
-                   
                 </tr>
             </thead>
             <tbody id="scorerTableBody">
@@ -26,6 +88,84 @@
         </table>
         <div id="message" class="mt-4"></div>
     </div>
+    <br><br>
+    <footer class="footer" id="contact">
+        <div class="section__container footer__container">
+          <div class="footer__col">
+            <div class="logo">
+              <a href="#home"><img class="logo_img"src="assets/logo.png" alt="logo" /></a>
+            </div>
+            <p class="section__description">
+              Undertake an unforgettable FIFA World Cup journey with us! Feel the excitement of the matches, soak up the lively atmosphere of host cities, and make memories that last a lifetime. Experience the best of football in style and comfort with our curated selection of World Cup experiences.
+            </p>
+            <button class="btn">Get Ticket</button>
+          </div>
+          <div class="footer__col">
+            <h4>FIFA World Cup Essentials</h4>
+            <ul class="footer__links">
+              <li><a href="#">Match Schedule & Fixtures</a></li>
+              <li><a href="#">Team Rankings & Standings</a></li>
+              
+              <li><a href="#">Stadium Information & Guidelines</a></li>
+             
+            </ul>
+          </div>
+          <div class="footer__col">
+            <h4>OUR SERVICES</h4>
+            <ul class="footer__links">
+              <li><a href="#">Matchday Assistance</a></li>
+              <li><a href="#">Ticketing Support</a></li>
+              <li><a href="#">Live Match Updates</a></li>
+              <li><a href="#">Accommodation Recommendations</a></li>
+            </ul>
+          </div>
+          <div class="footer__col">
+            <h4>MEDIA LINKS</h4>
+            <ul class="footer__links">
+              <li><a href="https://www.fifa.com/worldcup/">https://www.fifa.com/worldcup/</a></li>
+            </ul>
+            <div class="footer__socials">
+              <a href="https://www.facebook.com/fifaworldcup" target="_blank"><img src="assets/facebook.png" alt="facebook" /></a>
+              <a href=" https://www.instagram.com/fifaworldcup/" target="_blank"><img src="assets/instagram.png" alt="instagram" /></a>
+              <a href="https://www.youtube.com/user/FIFATV" target="_blank"><img src="assets/youtube.png" alt="youtube" /></a>
+              <a href="https://twitter.com/fifaworldcup" target="_blank"><img src="assets/twitter.png" alt="twitter" /></a>
+              
+            </div>
+              <br><br><br><br><br><br><br><br>
+    <div id="countdown">
+      <div id="years" class="time">
+          <span class="time-number" id="year">0</span>
+          <div class="time-label">Years</div>
+      </div>
+      <div id="days" class="time">
+          <span class="time-number" id="day">0</span>
+          <div class="time-label">Days</div>
+      </div>
+      <div id="hours" class="time">
+          <span class="time-number" id="hour">0</span>
+          <div class="time-label">Hours</div>
+      </div>
+      <div id="minutes" class="time">
+          <span class="time-number" id="minute">0</span>
+          <div class="time-label">Minutes</div>
+      </div>
+      <div id="seconds" class="time">
+          <span class="time-number" id="second">0</span>
+          <div class="time-label">Seconds</div>
+      </div>
+  </div>
+  
+          </div>
+          
+        </div>
+       
+      </footer>
+      
+   
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    
+    
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="config.js"></script>
     <script>
@@ -68,5 +208,6 @@
             loadScorers();  // Load scorers when the page is ready
         });
     </script>
+    <script src="countdown.js"></script>
 </body>
 </html>
