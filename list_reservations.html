@@ -114,13 +114,19 @@
             
             
                 
-                <div class="sort-options">
-                    <label for="sortMatches">Sort by:</label>
-                    <select id="sortMatches" onchange="sortReservations()">
-                        <option value="date">Date</option>
-                        <option value="match">Match</option>
-                    </select>
-                </div>
+            <div class="sort-options">
+                <label for="sortMatches">Sort by:</label>
+                <select id="sortMatches" onchange="sortReservations()">
+                    <option value="date">Date</option>
+                    <option value="match">Match</option>
+                    <option value="seat">Seat ID</Option>
+                </select>
+                <!-- Adding an input field for seat ID -->
+                <input type="text" id="seatIdInput" placeholder="Enter seat ID" style="margin-left: 10px;" />
+                <button id="sortButton" onclick="sortReservations()">Sort</button>
+            </div>
+            
+            
                 <div id="reservations-container" class="user-table"></div>
             
            
@@ -194,15 +200,44 @@
                 sessionStorage.removeItem('isStaff');
                 window.location.href = 'login.html'; // Redirect to login on logout
             }
-        function sortReservations() {
-            const sortOption = document.getElementById('sortMatches').value;
-            if (sortOption === 'match') {
-                reservationsData.sort((a, b) => (a.match.team1.name + a.match.team2.name).localeCompare(b.match.team1.name + b.match.team2.name));
-            } else if (sortOption === 'date') {
-                reservationsData.sort((a, b) => new Date(a.date) - new Date(b.date));
-            }
-            renderReservations(reservationsData);
+            function sortReservations() {
+    const sortOption = document.getElementById('sortMatches').value;
+    const seatIdInput = document.getElementById('seatIdInput').value; // Correct ID for the input field
+
+    if (sortOption === 'match') {
+        // Sort by match name
+        reservationsData.sort((a, b) => {
+            return (a.match.team1.name + a.match.team2.name).localeCompare(b.match.team1.name + b.match.team2.name);
+        });
+    } else if (sortOption === 'date') {
+        // Sort by date
+        reservationsData.sort((a, b) => {
+            return new Date(a.date) - new Date(b.date);
+        });
+    } else if (sortOption === 'seat') {
+        // Sort by seat number
+        if (!isNaN(seatIdInput)) {
+            // Numeric sorting
+            reservationsData.sort((a, b) => {
+                return Math.abs(a.seat_number - seatIdInput) - Math.abs(b.seat_number - seatIdInput);
+            });
+        } else {
+            // Alphanumeric sorting if the seat ID is not purely numeric
+            reservationsData.sort((a, b) => {
+                return a.seat_number.localeCompare(b.seat_number, undefined, {numeric: true});
+            });
         }
+    }
+    renderReservations(reservationsData); // Call this function to update the UI with the sorted data
+}
+
+    
+
+
+
+
+
+
         function logout() {
                 sessionStorage.removeItem('authToken');
                 sessionStorage.removeItem('isStaff');
