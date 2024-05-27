@@ -1,0 +1,215 @@
+.stadium-container {
+    position: relative; /* Ensures that z-index can be effectively used within this container */
+    display: grid;
+    grid-template-columns: 1fr 4fr 1fr;
+    grid-template-rows: 200px auto 20px;
+    justify-items: center;
+    align-items: start;
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px auto;
+    gap: 0px;
+}
+
+.stadium-img {
+    position: absolute; /* Positioning it absolutely will make it easier to layer behind */
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    z-index: 0; /* Lower z-index so it stays behind other content */
+    top: 50%;  /* Center it vertically */
+    left: 50%; /* Center it horizontally */
+    transform: translate(-50%, -50%); /* Adjust based on its size to make sure it's centered */
+}
+
+.price1Seats, .price2Seats, .price3Seats, .price4Seats {
+    position: relative; /* Ensure positioning context for z-index */
+    display: flex;
+    justify-content: center;
+    text-align: center; 
+    z-index: 1; /* Higher z-index to make them appear above the image */
+}
+
+.seat-button {
+    margin: 1px;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    font-size: 1rem;
+    background-color: #007bff;
+    color: white;
+    border: 2px solid #0056b3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    z-index: 2; /* Even higher z-index to ensure buttons are above all */
+}
+
+
+.seat-button:disabled {
+    background-color: red; /* Disabled state color */
+    border-color: #999;
+}
+
+.seat-button.btn-danger {
+    background-color: red; /* Reserved state color */
+    border-color: #b22a25;
+}
+
+.seat-button.btn-success {
+    background-color: #28a745; /* Selected state color */
+    border-color: #1e7e34;
+}
+
+.seat-layout {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+
+
+/* Places seat groups */
+.price1Seats { /* Top */
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+   
+}
+
+.price2Seats { /* Bottom */
+    grid-column: 2 / 3;
+    grid-row: 3/ 5;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.price3Seats { /* Left */
+    grid-column: 1 / 2;
+    grid-row: 1 / 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    flex-direction: row-reverse; 
+}
+
+.price4Seats { /* Right */
+    grid-column: 3 / 4;
+    grid-row: 1 / 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    flex-direction: row-reverse; 
+}
+
+
+.price1Seats, .price2Seats, .price3Seats {
+    width: 100%; /* Full width for uniformity */
+    display: flex;
+    justify-content: center; /* Center these seat groups horizontally */
+}
+.hidden {
+    display: none;
+}
+
+.header .nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    padding: 0 20px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    height: 60px;
+  }
+  body {
+    padding-top: 60px;
+  }
+  .nav__bar .logo img {
+    height: 50px;
+  }
+  .nav__links {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    align-items: center;
+    margin: 0 auto;
+  }
+  .nav__links li a {
+    display: block;
+    padding: 10px 15px;
+    color: white;
+    text-decoration: none;
+  }
+  .nav__btn {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  .nav__btn:hover {
+    background-color: darkred;
+  }
+  .nav_menu_btn {
+    display: none;
+    cursor: pointer;
+  }
+  @media (max-width: 768px) {
+    .header .nav {
+        justify-content: flex-start;
+    }
+    .nav__links {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+    .nav__links li a {
+        padding: 10px 8px;
+    }
+    .nav_menu_btn {
+        display: block;
+        margin-right: 10px;
+    }
+    .nav__btn {
+        padding: 10px 15px;
+    }
+  }
+     
+  :root {
+    --primary-color: #DC143C;
+    --primary-color-dark: #bc1c5c;
+    --text-dark: #0c0a09;
+    --text-light: #78716c;
+    --white: white;
+    --max-width: 1470px;
+  }
+  .btn {
+    padding: 0.75rem 1.5rem;
+    outline: none;
+    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--white);
+    background-color: #0056b3;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .btn:hover {
+    background-color: var(--primary-color-dark);
+  }
+  

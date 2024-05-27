@@ -268,4 +268,11 @@
     margin-bottom: 10px;
     font-size: 14px;
   }
-        
+  .nav__btn {
+    background-color: #333; /* Red Book Now button */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-left: auto; /* Pushes the button to the far right of the nav */
+  }

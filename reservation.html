@@ -5,64 +5,99 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Match Reservation</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="reservation.css">
 </head>
 <body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav__bar">
+                <div class="logo">
+                    <a href="#"><img src="assets/logo.png" alt="FIFA Logo"></a>
+                </div>
+                <div class="nav_menu_btn" id="menu-btn">
+                    <i class="ri-menu-line"></i>
+                </div>
+            </div>
+            <ul class="nav__links" id="nav-links">
+                <li><a href="user.html">Home</a></li>
+                <li><a href="user_news.html">News</a></li>
+                <li><a href="Groupstage.html">Group Stage</a></li>
+                <li><a href="userlistmatch.html">Matches</a></li>
+                <li><a href="userscorerlist.html">Top Scorer</a></li>
+                <li><a href="quiz.html">Quiz</a></li>
+            </ul>
+            <a href="dashboard.html" class="btn nav__btn">Back</a>
+        </nav>
+    </header>
     <div class="container mt-5" id="matchDetails">
-        <!-- Match details and reservation options will be loaded here -->
+        <!-- Stadium image and seats will be dynamically inserted here -->
     </div>
+    
     <script src="config.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        
         $(document).ready(function() {
-            const queryParams = new URLSearchParams(window.location.search);
-            const matchId = queryParams.get('match_id');
-        
-            // Fetch match details
-            $.getJSON(`${BASE_URL}/matches/${matchId}/`, function(match) {
-                $('#matchDetails').html(`
-                    <div class="card">
-                        <div class="card-header">Match Details</div>
-                        <div class="card-body">
-                            <h4 class="card-title text-center">
-                                <img src="${match.team1.logo}" alt="${match.team1.name} Logo" style="height: 50px;">
-                                ${match.team1.name} vs ${match.team2.name}
-                                <img src="${match.team2.logo}" alt="${match.team2.name} Logo" style="height: 50px;">
-                            </h4>
-                            <p class="card-text">
-                                Date and Time: ${match.date}<br>
-                                Stadium: ${match.stadium.name}, ${match.stadium.location}<br>
-                                Match Type: ${match.type}<br>
-                                Prices: $${match.price1}, $${match.price2}, $${match.price3}
-                            </p>
-                            <div id="seatSelection"></div>
-                            <button id="confirmReservation" class="btn btn-success mt-3">Confirm Reservation</button>
-                        </div>
+    const queryParams = new URLSearchParams(window.location.search);
+    const matchId = queryParams.get('match_id');
+
+    // Fetch match details
+    $.getJSON(`${BASE_URL}/matches/${matchId}/`, function(match) {
+        $('#matchDetails').html(`
+            
+                <div class="card-header">Match Details</div>
+                <div class="card-body">
+                    <h4 class="card-title text-center">
+                        <img src="${match.team1.logo}" alt="${match.team1.name} Logo" style="height: 50px;">
+                        ${match.team1.name} vs ${match.team2.name}
+                        <img src="${match.team2.logo}" alt="${match.team2.name} Logo" style="height: 50px;">
+                    </h4>
+                    <p class="card-text">
+                        Date and Time: ${match.date}<br>
+                        Stadium: ${match.stadium.name}, ${match.stadium.location}<br>
+                        Match Type: ${match.type}<br>
+                        Prices: $${match.price1}, $${match.price2}, $${match.price3}
+                    </p>
+                    <div class="stadium-container">
+                        <div class="price1Seats seat-layout"></div>  <!-- Seats at the Top -->
+                        <div class="price3Seats seat-layout"></div>  <!-- Seats on the Left -->
+                        <img src="assets/Reservationstad.jpg" class="stadium-img" alt="Stadium">
+                        <div class="price4Seats seat-layout"></div>  <!-- Seats on the Right -->
+                        <div class="price2Seats seat-layout"></div>  <!-- Seats at the Bottom -->
                     </div>
-                `);
-                fetchReservedSeats(matchId, match.stadium.seats, match.price1, match.price2, match.price3);
-            });
-        
-            function fetchReservedSeats(matchId, totalSeats, price1, price2, price3) {
-                $.getJSON(`${BASE_URL}/reserved-seats/${matchId}/`, function(reservedSeats) {
-                    let reservedSeatNumbers = reservedSeats.map(seat => seat.seat_number);
-                    generateSeatButtons(totalSeats, price1, price2, price3, reservedSeatNumbers);
-                });
-            }
-        
-            function generateSeatButtons(totalSeats, price1, price2, price3, reservedSeats) {
-                const seatDiv = $('#seatSelection');
-                appendSeats(seatDiv, 1, Math.floor(totalSeats * 0.50), price1, "price1Seats", reservedSeats);
-                appendSeats(seatDiv, Math.floor(totalSeats * 0.50) + 1, Math.floor(totalSeats * 0.80), price2, "price2Seats", reservedSeats);
-                appendSeats(seatDiv, Math.floor(totalSeats * 0.80) + 1, totalSeats, price3, "price3Seats", reservedSeats);
-            }
-        
-            function appendSeats(div, start, end, price, className, reservedSeats) {
-                for (let i = start; i <= end; i++) {
-                    const isReserved = reservedSeats.includes(i.toString());
-                    const buttonClass = isReserved ? 'btn-danger' : 'btn-secondary';
-                    div.append(`<button class="btn ${buttonClass} m-1 seat-button ${className}" data-price="${price}" data-seat-number="${i}" ${isReserved ? 'disabled' : ''}>Seat ${i} - $${price}</button>`);
-                }
-            }
+                    <button id="confirmReservation" class="btn btn-success mt-3">Confirm Reservation</button>
+                </div>
+            
+        `);
+        // Call the function to fetch reserved seats and generate seat buttons
+        fetchReservedSeats(matchId, match.stadium.seats, match.price1, match.price2, match.price3);
+    });
+
+    function fetchReservedSeats(matchId, totalSeats, price1, price2, price3) {
+        $.getJSON(`${BASE_URL}/reserved-seats/${matchId}/`, function(reservedSeats) {
+            let reservedSeatNumbers = reservedSeats.map(seat => seat.seat_number);
+            generateSeatButtons(totalSeats, price1, price2, price3, reservedSeatNumbers);
+        });
+    }
+
+    function generateSeatButtons(totalSeats, price1, price2, price3, reservedSeats) {
+        appendSeats($('.price1Seats'), 1, Math.floor(totalSeats * 0.25), price1, "price1Seats", reservedSeats);
+        appendSeats($('.price2Seats'), Math.floor(totalSeats * 0.75) + 1, totalSeats, price2, "price2Seats", reservedSeats);
+        appendSeats($('.price3Seats'), Math.floor(totalSeats * 0.25) + 1, Math.floor(totalSeats * 0.50), price3, "price3Seats", reservedSeats);
+        appendSeats($('.price4Seats'), Math.floor(totalSeats * 0.50) + 1, Math.floor(totalSeats * 0.75), price3, "price4Seats", reservedSeats);
+    }
+
+    function appendSeats(div, start, end, price, className, reservedSeats) {
+        for (let i = start; i <= end; i++) {
+            const isReserved = reservedSeats.includes(i.toString());
+            const buttonClass = isReserved ? 'btn-danger' : 'btn-secondary';
+            div.append(`<button class="btn ${buttonClass} m-1 seat-button" data-price="${price}" data-seat-number="${i}" ${isReserved ? 'disabled' : ''}>Seat ${i} - $${price}</button>`);
+        }
+    }
+
+
+
+
         
             $(document).on('click', '.seat-button', function() {
                 if (!$(this).is('[disabled]')) {
