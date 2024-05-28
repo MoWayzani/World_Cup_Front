@@ -213,3 +213,50 @@
     background-color: var(--primary-color-dark);
   }
   
+/* Modal Header */
+.modal-header {
+    background-color: #007bff;
+    color: white;
+}
+
+.modal-title {
+    font-weight: bold;
+}
+
+/* Modal Body */
+.modal-body {
+    padding: 20px;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-control {
+    border-radius: 0.25rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+}
+
+/* Modal Footer */
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+/* Button Colors */
+
+
+/* Adjusting the form within the modal */
+#creditCardForm {
+    margin-bottom: 0;
+}
+
+/* Ensuring responsiveness */
+@media (max-width: 768px) {
+    .modal-content {
+        padding: 10px;
+    }
+}
