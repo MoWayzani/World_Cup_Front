@@ -158,6 +158,13 @@
    
     <script src="config.js"></script>
     <script>
+              window.onload = function() {
+                const authToken = sessionStorage.getItem('authToken');
+                const isStaff = sessionStorage.getItem('isStaff') === 'true';
+    
+                if (!authToken || !isStaff) {
+                    window.location.href = 'login.html'; // Ensure only admins can access the admin dashboard
+                } else {
         document.getElementById('createMatchForm').onsubmit = function(event) {
             event.preventDefault();
             const formData = {
@@ -221,6 +228,8 @@
             }
         loadTeams();
         loadStadiums();
+                }
+            }
     </script>
 </body>
 </html>

@@ -76,6 +76,11 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
+          window.onload = function() {
+            const authToken = sessionStorage.getItem('authToken');
+            if (!authToken) {
+                window.location.href = 'login.html';
+            } else {
         $(document).ready(function () {
             const queryParams = new URLSearchParams(window.location.search);
             const matchId = queryParams.get('match_id');
@@ -178,6 +183,8 @@
                 });
             });
         });
+    }
+    }
     </script>
 </body>
 

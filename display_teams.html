@@ -118,6 +118,13 @@
   
     <script src="config.js"></script>
     <script>
+              window.onload = function() {
+                const authToken = sessionStorage.getItem('authToken');
+                const isStaff = sessionStorage.getItem('isStaff') === 'true';
+    
+                if (!authToken || !isStaff) {
+                    window.location.href = 'login.html'; // Ensure only admins can access the admin dashboard
+                } else {
          function deleteTeam(teamId) {
             if (confirm('Are you sure you want to delete this team?')) {
                 fetch(`${BASE_URL}/teams/${teamId}/`, {
@@ -190,6 +197,8 @@
                 sessionStorage.removeItem('isStaff');
                 window.location.href = 'login.html'; // Redirect to login on logout
             }
+        }
+    }
     </script>
     
 </body>
