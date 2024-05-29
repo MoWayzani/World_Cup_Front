@@ -151,12 +151,13 @@
 
     <script src="config.js"></script>
     <script>
-        window.onload = function(){
-            const authToken = sessionStorage.getItem('authToken');
-            if(!authToken){
-                window.location.href = 'login.html';
-            }
-            else{
+       window.onload = function() {
+                const authToken = sessionStorage.getItem('authToken');
+                const isStaff = sessionStorage.getItem('isStaff') === 'true';
+    
+                if (!authToken || !isStaff) {
+                    window.location.href = 'login.html'; // Ensure only admins can access the admin dashboard
+                } else {
  
         document.getElementById('addAdminForm').onsubmit = function(event) {
         event.preventDefault();

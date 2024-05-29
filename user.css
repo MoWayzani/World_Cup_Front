@@ -44,8 +44,8 @@ body, html {
   align-items: center;
   background-color: black;
   padding: 0 20px;
-  position: fixed; /* This makes the navbar fixed at the top */
-  width: 100%; /* Ensures the navbar extends full width */
+  position: fixed; 
+  width: 100%; 
   top: 0; /* Fixes the navbar to the top of the viewport */
   z-index: 1000; /* Ensures navbar stays on top of other content */
 }
