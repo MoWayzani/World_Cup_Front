@@ -194,12 +194,14 @@ html, body {
   }
   
   .header {
-    background-image: url("assets/backmain.jpg");
+    background-image: url("assets/backmain2.png");
     background-position: center center;
-    background-size: cover;
+    background-size: contain; /* Ensures the entire image is visible */
     background-repeat: no-repeat;
-    height: 150vh; /* Adjust the height as needed */
+    height: 130vh; /* Adjust the height as needed */
+    
   }
+  
 
 
 

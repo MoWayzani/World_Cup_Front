@@ -185,6 +185,11 @@
         });
     }
     }
+    function logout() {
+            sessionStorage.removeItem('authToken');
+            sessionStorage.removeItem('isStaff');
+            window.location.href = 'login.html'; // Redirect to login on logout
+        }
     </script>
 </body>
 

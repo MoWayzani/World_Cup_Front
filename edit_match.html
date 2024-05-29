@@ -266,7 +266,13 @@
         }
     
         loadInitialData();
-      }  // Load existing match data and initialize form
+      }  
+      // Load existing match data and initialize form
+      function logout() {
+                sessionStorage.removeItem('authToken');
+                sessionStorage.removeItem('isStaff');
+                window.location.href = 'login.html'; // Redirect to login on logout
+            }
     </script>
     
 </body>
