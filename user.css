@@ -194,20 +194,14 @@ html, body {
   }
   
   .header {
-    background-image: url("assets/worldcup.png");
+    background-image: url("assets/backmain.jpg");
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
-    height: 100vh; /* Adjust the height as needed */
+    height: 150vh; /* Adjust the height as needed */
   }
 
-.header {
-  background-image: url("assets/worldcup.png");
-  background-position: center center;
-  background-size: cover;
-  background-repeat: no-repeat;
 
-}
 
 nav {
   position: fixed;

@@ -5,74 +5,148 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Team</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    
-    <style>
-        body {
-            background-color: wheat;
-    background-image: url('assets/addadminjpg.jpg');  /* Path to your background image */
-    background-size: cover;  /* Cover the entire viewport */
-    background-position: center;  /* Center the background image */
-    background-repeat: no-repeat;  /* Sets a light gray background for better contrast */
-        }
-        .container {
-            background-color: rgba(255, 255, 255, 0.7); 
-            border: 1px solid #333;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Adds subtle shadow for depth */
-            margin-top: 40px; /* More space on the top */
-        }
-        .form-group label {
-            font-weight: bold; /* Makes labels bold */
-        }
-        .btn-success {
-            width: 100%; /* Full width button */
-            padding: 10px; /* Larger padding for a better click area */
-        }
-        @media (min-width: 768px) {
-            .container {
-                margin-top: 60px; /* More top margin on larger screens */
-            }
-        }
-    </style>
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="edit_teams.css">
 </head>
 <body>
-    <div class="container">
-        <a href="display_teams.html" class="btn btn-primary mb-3">Back to List</a> <!-- Back button -->
-        <h1 class="mt-2 mb-4">Edit Team</h1>
-        <form id="editTeamForm" enctype="multipart/form-data">
-            <input type="hidden" id="teamId">
-            <div class="form-group">
-                <label for="teamName">Team Name</label>
-                <input type="text" class="form-control" id="teamName" required>
+    <div class="wrapper">
+        <!--header menu start-->
+        <div class="header">
+            <div class="header-menu">
+                <div class="title">World <span>Cup</span></div>
+                <div class="sidebar-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <ul>
+                      <center class="profile">
+                    
+                    <p> <span id="userName">Loading...</span></p>
+                </center>
+                    <li><a href="#"><i class="fas fa-power-off" onclick="logout()" class="btn btn-danger"></i></a></li>
+                </ul>
             </div>
-            <div class="form-group">
-                <label for="group_name">Group Name</label>
-                <input type="text" class="form-control" id="group_name" required>
+        </div>
+        <!--header menu end-->
+        <!--sidebar start-->
+        <div class="sidebar">
+            <div class="sidebar-menu">
+              
+                <li class="item">
+                    <a href="admin.html" class="menu-btn">
+                        <i class="fas fa-desktop"></i><span>Dashboard</span>
+                        
+                    </a>
+                </li>
+
+                <li class="item">
+                    <a href="adminuser.html" class="menu-btn">
+                        <i class="fas fa-desktop"></i><span>Manage User</span>
+                        
+                    </a>
+                </li>
+
+              
+                
+                <li class="item" id="profile">
+                    <a href="#profile" class="menu-btn">
+                        <i class="fas fa-user-circle"></i><span>News <i class="fas fa-chevron-down drop-down"></i></span>
+                    </a>
+                    <div class="sub-menu">
+                        <a href="add_news.html"><i class="fas fa-image"></i><span>Add News</span></a>
+                        <a href="admin_news.html"><i class="fas fa-address-card"></i><span>View News</span></a>
+                    </div>
+                </li>
+                <li class="item" id="messages">
+                    <a href="#messages" class="menu-btn">
+                        <i class="fas fa-envelope"></i><span>Teams <i class="fas fa-chevron-down drop-down"></i></span>
+                    </a>
+                    <div class="sub-menu">
+                        <a href="add_team.html"><i class="fas fa-envelope"></i><span>Add Teams</span></a>
+                        <a href="display_teams.html"><i class="fas fa-envelope-square"></i><span>Display Teams</span></a>
+                       
+                    </div>
+                </li>
+                <li class="item" id="settings">
+                    <a href="#settings" class="menu-btn">
+                        <i class="fas fa-cog"></i><span>Stadiums <i class="fas fa-chevron-down drop-down"></i></span>
+                    </a>
+                    <div class="sub-menu">
+                        <a href="add_stadium.html"><i class="fas fa-lock"></i><span>Add Stadium</span></a>
+                        <a href="list_stadiums.html"><i class="fas fa-language"></i><span>List Stadium</span></a>
+                    </div>
+                </li>
+                <li class="item" id="matches">
+                    <a href="#matches" class="menu-btn">
+                        <i class="fas fa-cog"></i><span>Matches <i class="fas fa-chevron-down drop-down"></i></span>
+                    </a>
+                    <div class="sub-menu">
+                        <a href="create_match.html"><i class="fas fa-lock"></i><span>Create Match</span></a>
+                        <a href="list_matches.html"><i class="fas fa-language"></i><span>List Match</span></a>
+                    </div>
+                   
+                </li> 
+                <li class="item" id="scorer">
+                    <a href="#scorer" class="menu-btn">
+                        <i class="fas fa-cog"></i><span>Scorer <i class="fas fa-chevron-down drop-down"></i></span>
+                    </a>
+                    <div class="sub-menu">
+                        <a href="add_scorer.html"><i class="fas fa-lock"></i><span>Add Scorer</span></a>
+                        <a href="scorer_list.html"><i class="fas fa-language"></i><span>List Scorer</span></a>
+                    </div>
+                    
+                </li> 
+                
+                <li class="item">
+                    
+                     <a href="list_reservations.html" class="menu-btn">
+                        <i class="fas fa-address-card"></i><span>Reservations</span>
+                        
+                    </a>
+                </li>
             </div>
-            <div class="form-group">
-                <label for="matches_played">Matches Played</label>
-                <input type="number" class="form-control" id="matches_played" required>
-            </div>
-            <div class="form-group">
-                <label for="wins">Wins</label>
-                <input type="number" class="form-control" id="wins" required>
-            </div>
-            <div class="form-group">
-                <label for="draws">Draws</label>
-                <input type="number" class="form-control" id="draws" required>
-            </div>
-            <div class="form-group">
-                <label for="losses">Losses</label>
-                <input type="number" class="form-control" id="losses" required>
-            </div>
-            <div class="form-group">
-                <label for="points">Points</label>
-                <input type="number" class="form-control" id="points" required>
-            </div>
-            <button type="submit" class="btn btn-success">Update Team</button>
-        </form>
+        </div>
+        <!--sidebar end-->
+        <!--main container start-->
+        <div class="main-container">
+             <!-- Back button -->
+            <h1 class="mt-2 mb-4">Edit Team</h1>
+            <form id="editTeamForm" enctype="multipart/form-data">
+                <input type="hidden" id="teamId">
+                <div class="form-group">
+                    <label for="teamName">Team Name</label>
+                    <input type="text" class="form-control" id="teamName" required>
+                </div>
+                <div class="form-group">
+                    <label for="group_name">Group Name</label>
+                    <input type="text" class="form-control" id="group_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="matches_played">Matches Played</label>
+                    <input type="number" class="form-control" id="matches_played" required>
+                </div>
+                <div class="form-group">
+                    <label for="wins">Wins</label>
+                    <input type="number" class="form-control" id="wins" required>
+                </div>
+                <div class="form-group">
+                    <label for="draws">Draws</label>
+                    <input type="number" class="form-control" id="draws" required>
+                </div>
+                <div class="form-group">
+                    <label for="losses">Losses</label>
+                    <input type="number" class="form-control" id="losses" required>
+                </div>
+                <div class="form-group">
+                    <label for="points">Points</label>
+                    <input type="number" class="form-control" id="points" required>
+                </div>
+               
+                <button type="submit" class="btn btn-success">Update Team</button>
+                <a href="display_teams.html" class="btn btn-success">Back</a>
+            </form>
+        </div>
+        <!--main container end-->
     </div>
     <script src="config.js"></script>
     
